@@ -1,0 +1,50 @@
+[
+    {
+        "id_vehiculo": 1,
+        "patente": "ABC123",
+        "marca": "Toyota",
+        "modelo": "Corolla",
+        "tipo": "Sed\u00e1n",
+        "a\u00f1o": 2015,
+        "kilometraje": 75000,
+        "precio_compra": 12000,
+        "precio_venta": 15000,
+        "estado": "Disponible"
+    },
+    {
+        "id_vehiculo": 2,
+        "patente": "XYZ789",
+        "marca": "Ford",
+        "modelo": "Focus",
+        "tipo": "Hatchback",
+        "a\u00f1o": 2017,
+        "kilometraje": 50000,
+        "precio_compra": 14000,
+        "precio_venta": 17000,
+        "estado": "Reservado"
+    },
+    {
+        "id": 3,
+        "placa": "POI990",
+        "marca": "toyota",
+        "modelo": "etios",
+        "tipoVehiculo": "auto compacto",
+        "anio": 2024,
+        "kilometraje": 100,
+        "precioCompra": 30000.0,
+        "precioVenta": 50000.0,
+        "estado": "Disponible"
+    },
+    {
+        "id": 4,
+        "placa": "xyt678",
+        "marca": "chevrolet",
+        "modelo": "onix",
+        "tipoVehiculo": "compactos",
+        "anio": 2024,
+        "kilometraje": 1000,
+        "precioCompra": 10000.0,
+        "precioVenta": 40000.0,
+        "estado": "Vendido"
+    }
+]
