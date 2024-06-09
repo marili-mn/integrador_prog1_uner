@@ -137,7 +137,7 @@ class InterfazConcesionario:
                     cliente.get('documento', 'N/A'),
                     cliente.get('apellido', 'N/A'),
                     cliente.get('direccion', 'N/A'),
-                    cliente.get('telefono', 'N/A'),
+                    cliente.get('celular', 'N/A'),
                     cliente.get('email', 'N/A')
                 ))
         else:
