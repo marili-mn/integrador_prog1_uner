@@ -126,62 +126,43 @@ class InterfazConcesionario:
         clientes = self.customDb.obtenerTodosLosRegistros()
         if clientes:
             # Obtener la longitud maxima de los datos para cada columna
-            maxLengths = {
-                "id": max(len(str(cliente.get('id', 'N/A'))) for cliente in clientes),
-                "Nombre": max(len(cliente.get('nombre', 'N/A')) for cliente in clientes),
-                "Documento": max(len(str(cliente.get('documento', 'N/A'))) for cliente in clientes),
-                "Apellido": max(len(cliente.get('apellido', 'N/A')) for cliente in clientes),
-                "Direccion": max(len(cliente.get('direccion', 'N/A')) for cliente in clientes),
-                "Celular": max(len(cliente.get('celular', 'N/A')) for cliente in clientes),
-                "Email": max(len(cliente.get('email', 'N/A')) for cliente in clientes),
-            }
+            max_lengths = {
+            "ID": max(len(str(cliente.get('id', 'N/A'))) for cliente in clientes),
+            "Nombre": max(len(cliente.get('nombre', 'N/A')) for cliente in clientes),
+            "Documento": max(len(str(cliente.get('documento', 'N/A'))) for cliente in clientes),
+            "Apellido": max(len(cliente.get('apellido', 'N/A')) for cliente in clientes),
+            "Direccion": max(len(cliente.get('direccion', 'N/A')) for cliente in clientes),
+            "Celular": max(len(cliente.get('celular', 'N/A')) for cliente in clientes),
+            "Email": max(len(cliente.get('email', 'N/A')) for cliente in clientes),
+        }
 
-            # Calcular la longitud maxima de las columnas
-            maxLengths = {key: max(len(str(cliente.get(key, ""))) for cliente in clientes) for key in clientes[0]}
+        # Imprime los encabezados de las columnas
+        print("{:<{id_width}} {:<{nombre_width}} {:<{doc_width}} {:<{apellido_width}} {:<{direccion_width}} {:<{celular_width}} {:<{email_width}}".format(
+            "ID", "Nombre", "Documento", "Apellido", "Direccion", "Celular", "Email",
+            id_width=max_lengths["ID"] + 2, nombre_width=max_lengths["Nombre"] + 2,
+            doc_width=max_lengths["Documento"] + 2, apellido_width=max_lengths["Apellido"] + 2,
+            direccion_width=max_lengths["Direccion"] + 2, celular_width=max_lengths["Celular"] + 2,
+            email_width=max_lengths["Email"]
+        ))
+        print("=" * (sum(max_lengths.values()) + 12))  # Línea divisoria
 
-            # Calcular el ancho total de la linea ===
-            totalWidth = sum(maxLengths.values()) + (len(maxLengths) - 1) * 2 + 4
-
-            # Imprimir los encabezados de la tabla
-            print("{:<10} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15}".format(
-                "ID", "Nombre", "Documento", "Apellido", "Direccion", "Celular", "Email",
+        # Imprime los datos de los clientes
+        for cliente in clientes:
+            print("{:<{id_width}} {:<{nombre_width}} {:<{doc_width}} {:<{apellido_width}} {:<{direccion_width}} {:<{celular_width}} {:<{email_width}}".format(
+                cliente.get('id', 'N/A'),
+                cliente.get('nombre', 'N/A'),
+                cliente.get('documento', 'N/A'),
+                cliente.get('apellido', 'N/A'),
+                cliente.get('direccion', 'N/A'),
+                cliente.get('celular', 'N/A'),
+                cliente.get('email', 'N/A'),
+                id_width=max_lengths["ID"] + 2, nombre_width=max_lengths["Nombre"] + 2,
+                doc_width=max_lengths["Documento"] + 2, apellido_width=max_lengths["Apellido"] + 2,
+                direccion_width=max_lengths["Direccion"] + 2, celular_width=max_lengths["Celular"] + 2,
+                email_width=max_lengths["Email"]
             ))
-            print("=" * totalWidth) #Linea que divide
-
-            # Imprimir el cliente en su respectivo formato de tabla
-            for cliente in clientes:
-                print("{0:<10} {1:<15} {2:<15} {3:<15} {4:<15} {5:<15} {6:<15}".format(
-                    cliente.get('id', 'N/A'),
-                    cliente.get('nombre', 'N/A'),
-                    cliente.get('documento', 'N/A'),
-                    cliente.get('apellido', 'N/A'),
-                    cliente.get('direccion', 'N/A'),
-                    cliente.get('celular', 'N/A'),
-                    cliente.get('email', 'N/A'),
-                ))
         else:
             print("No hay clientes registrados.")
-
-
-
-
-            """ # Imprimir encabezados de la tabla
-            print("{:<10} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15}".format(
-            "ID", "Nombre", "Documento", "Apellido", "Direccion", "Celular", "Email"))
-            print("=" * 100)
-            # Imprimir cada cliente en formato de tabla
-            for cliente in clientes:
-                print("{:<10} {:<15} {:<15} {:<15} {:<15} {:<15} {:<15}".format(
-                    cliente.get('id', 'N/A'),
-                    cliente.get('nombre', 'N/A'),
-                    cliente.get('documento', 'N/A'),
-                    cliente.get('apellido', 'N/A'),
-                    cliente.get('direccion', 'N/A'),
-                    cliente.get('celular', 'N/A'),
-                    cliente.get('email', 'N/A')
-                ))
-        else:
-            print("No hay clientes registrados.")"""
 
     def administrarCustomers(self):
         # similar a modificarVehiculos
