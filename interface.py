@@ -12,30 +12,28 @@ class InterfazConcesionario:
         self.transaccionesDb = Database('data/transacciones.json')
 
     def mainMenu(self):
-        while True:
-            choice = input("""
+        choice = input("""
     1. Gestionar Vehiculos
     2. Gestionar Clientes
     3. Registrar Transaccion
     4. Salir          
     Seleccione una opcion: """
                         )
-            match choice:
-                case '1':                       
-                    self.modificarVehiculos()
-                case '2':
-                    self.administrarCustomers()
-                case '3':
-                    self.administrarTransacciones()
-                case '4':
-                    sys.exit()
-                case default:
-                    print("Opcion invalida, por favor intentelo nuevamente.")
-                # Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
+        match choice:
+            case '1':                       
+                self.modificarVehiculos()
+            case '2':
+                self.administrarCustomers()
+            case '3':
+                self.administrarTransacciones()
+            case '4':
+                sys.exit()
+            case default:
+                print("Opcion invalida, por favor intentelo nuevamente.")
+            #   Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
 
     def modificarVehiculos(self):
-        while True:
-            choice = input("""
+        choice = input("""
     1. Crear Vehiculo
     2. Editar Vehiculo
     3. Eliminar Vehiculo
@@ -43,20 +41,20 @@ class InterfazConcesionario:
     5. Volver al menu principal
     Seleccione una opcion: """
                         )
-            match choice:
-                case '1':
-                    self.crearVehiculo()
-                case '2':
-                    self.editarVehiculo()
-                case '3':
-                    self.eliminarVehiculo()
-                case '4':
-                    self.listarVehiculos()
-                case '5':
-                    return
-                case default:
+        match choice:
+            case '1':
+                self.crearVehiculo()
+            case '2':
+                self.editarVehiculo()
+            case '3':
+                self.eliminarVehiculo()
+            case '4':
+                self.listarVehiculos()
+            case '5':
+                return
+            case default:
                 #   default agarra todo lo que no es 12345 incluso 5 puede ser "" que sería enter
-                    print("Opcion invalida, por favor intente nuevamente.")
+                print("Opcion invalida, por favor intente nuevamente.")
                 # Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
 
     def crearVehiculo(self):
@@ -175,29 +173,28 @@ class InterfazConcesionario:
 
     def administrarCustomers(self):
         # similar a modificarVehiculos
-        while True:
-            choice = input("""
+        choice = input("""
     1. Crear Cliente
-    2. Editar Cliente")
-    3. Eliminar Cliente")
-    4. Listar Clientes")
+    2. Editar Cliente
+    3. Eliminar Cliente
+    4. Listar Clientes
     5. Volver al Menu Principal 
     Seleccione una opcion: """
                         )
-            match choice:
-                case '1':
-                    self.crearCustomer()
-                case '2':
-                    self.editarCustomer()
-                case '3':
-                    self.eliminarCustomer()
-                case '4':
-                    self.listarClientes()
-                case '5':
-                    return
-                case default:
-                    print("Opcion invalida, por favor intente nuevamente.")
-                # Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
+        match choice:
+            case '1':
+                self.crearCustomer()
+            case '2':
+                self.editarCustomer()
+            case '3':
+                self.eliminarCustomer()
+            case '4':
+                self.listarClientes()
+            case '5':
+                return
+            case default:
+                print("Opcion invalida, por favor intente nuevamente.")
+            #   Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
 
     def crearCustomer(self):
         nombre = input("Ingrese el nombre del cliente: ")
@@ -241,19 +238,22 @@ class InterfazConcesionario:
             print(customer)
 
     def administrarTransacciones(self):
-        while True:
-            print("\n1. Crear Transaccion")
-            print("2. Listar Transacciones")
-            print("3. Volver al Menu Principal")
-            choice = input("Seleccione una opcion: ")
-            if choice == '1':
+        choice = input("""
+    1. Crear Transaccion
+    2. Listar Transacciones
+    3. Volver al Menu Principal
+    Seleccione una opcion: """
+                  )
+        match choice:
+            case '1':
                 self.crearTransaccion()
-            elif choice == '2':
+            case '2':
                 self.listarTransacciones()
-            elif choice == '3':
+            case '3':
                 return
-            else:
+            case default:
                 print("Opcion invalida, por favor intente nuevamente.")
+            #   Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
 
     def crearTransaccion(self):
         customerId = int(input("Ingrese el ID del cliente: "))
