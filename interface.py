@@ -1,5 +1,6 @@
 import sys
 import os
+
 from vehicle import Vehicle
 from customer import Customer
 from transaction import Transaction
@@ -11,9 +12,6 @@ class InterfazConcesionario:
         self.vehiculosDb = Database('data/vehiculos.json')
         self.customDb = Database('data/clientes.json')
         self.transaccionesDb = Database('data/transacciones.json')
-
-
-
 
     def mainMenu(self):
         if os.name == 'nt':
