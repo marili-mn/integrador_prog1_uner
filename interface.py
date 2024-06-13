@@ -1,4 +1,5 @@
 import sys
+import os
 from vehicle import Vehicle
 from customer import Customer
 from transaction import Transaction
@@ -11,7 +12,14 @@ class InterfazConcesionario:
         self.customDb = Database('data/clientes.json')
         self.transaccionesDb = Database('data/transacciones.json')
 
+
+
+
     def mainMenu(self):
+        if os.name == 'nt':
+            os.system('cls')  # Comando para Windows
+        elif os.name == 'posix':
+            os.system('clear')  # comando para Linux 
         choice = input("""
     1. Gestionar Vehiculos
     2. Gestionar Clientes
@@ -20,7 +28,11 @@ class InterfazConcesionario:
     Seleccione una opcion: """
                         )
         match choice:
-            case '1':                       
+            case '1':
+                if os.name == 'nt':
+                    os.system('cls')  # Comando para Windows
+                elif os.name == 'posix':
+                    os.system('clear')  # comando para Linux 
                 self.modificarVehiculos()
             case '2':
                 self.administrarCustomers()
@@ -53,7 +65,7 @@ class InterfazConcesionario:
             case '5':
                 return
             case default:
-                #   default agarra todo lo que no es 12345 incluso 5 puede ser "" que sería enter
+                #   default agarra todo lo que no es 12345 incluso 5 podria cambiarse por "" que sería enter
                 print("Opcion invalida, por favor intente nuevamente.")
                 # Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
 
