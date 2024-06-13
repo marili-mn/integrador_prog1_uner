@@ -19,17 +19,19 @@ class InterfazConcesionario:
     3. Registrar Transaccion
     4. Salir          
     Seleccione una opcion: """
-                        )                       
-            if choice == '1':
-                self.modificarVehiculos()
-            elif choice == '2':
-                self.administrarCustomers()
-            elif choice == '3':
-                self.administrarTransacciones()
-            elif choice == '4':
-                sys.exit()
-            else:
-                print("Opcion invalida, por favor intentelo nuevamente.")
+                        )
+            match choice:
+                case '1':                       
+                    self.modificarVehiculos()
+                case '2':
+                    self.administrarCustomers()
+                case '3':
+                    self.administrarTransacciones()
+                case '4':
+                    sys.exit()
+                case default:
+                    print("Opcion invalida, por favor intentelo nuevamente.")
+                # Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
 
     def modificarVehiculos(self):
         while True:
