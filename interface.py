@@ -3,7 +3,7 @@ from vehicle import Vehicle
 from customer import Customer
 from transaction import Transaction
 from database import Database
-
+#   Importamos las clases de los json
 
 class InterfazConcesionario:
     def __init__(self):
@@ -13,11 +13,13 @@ class InterfazConcesionario:
 
     def mainMenu(self):
         while True:
-            print("\n1. Gestionar Vehiculos")
-            print("2. Gestionar Clientes")
-            print("3. Registrar Transaccion")
-            print("4. Salir")
-            choice = input("Seleccione una opcion: ")
+            choice = input("""
+    1. Gestionar Vehiculos
+    2. Gestionar Clientes
+    3. Registrar Transaccion
+    4. Salir          
+    Seleccione una opcion: """
+                        )                       
             if choice == '1':
                 self.modificarVehiculos()
             elif choice == '2':
