@@ -176,24 +176,28 @@ class InterfazConcesionario:
     def administrarCustomers(self):
         # similar a modificarVehiculos
         while True:
-            print("\n1. Crear Cliente")
-            print("2. Editar Cliente")
-            print("3. Eliminar Cliente")
-            print("4. Listar Clientes")
-            print("5. Volver al Menu Principal")
-            choice = input("Seleccione una opcion: ")
-            if choice == '1':
-                self.crearCustomer()
-            elif choice == '2':
-                self.editarCustomer()
-            elif choice == '3':
-                self.eliminarCustomer()
-            elif choice == '4':
-                self.listarClientes()
-            elif choice == '5':
-                return
-            else:
-                print("Opcion invalida, por favor intente nuevamente.")
+            choice = input("""
+    1. Crear Cliente
+    2. Editar Cliente")
+    3. Eliminar Cliente")
+    4. Listar Clientes")
+    5. Volver al Menu Principal 
+    Seleccione una opcion: """
+                        )
+            match choice:
+                case '1':
+                    self.crearCustomer()
+                case '2':
+                    self.editarCustomer()
+                case '3':
+                    self.eliminarCustomer()
+                case '4':
+                    self.listarClientes()
+                case '5':
+                    return
+                case default:
+                    print("Opcion invalida, por favor intente nuevamente.")
+                # Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
 
     def crearCustomer(self):
         nombre = input("Ingrese el nombre del cliente: ")
