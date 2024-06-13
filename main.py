@@ -3,7 +3,7 @@ from interface import InterfazConcesionario
 def main():
     interface = InterfazConcesionario()
     interface.mainMenu()
-    #   llama al método mainMenu de la interface que trajimos dede el import
+    #   llama al método mainMenu de la interface que trajimos desde el import
 
 if __name__ == "__main__":
     main()

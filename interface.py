@@ -35,24 +35,29 @@ class InterfazConcesionario:
 
     def modificarVehiculos(self):
         while True:
-            print("\n1. Crear Vehiculo")
-            print("2. Editar Vehiculo")
-            print("3. Eliminar Vehiculo")
-            print("4. Listar Vehiculos")
-            print("5. Volver al menu principal")
-            choice = input("Seleccione una opcion: ")
-            if choice == '1':
-                self.crearVehiculo()
-            elif choice == '2':
-                self.editarVehiculo()
-            elif choice == '3':
-                self.eliminarVehiculo()
-            elif choice == '4':
-                self.listarVehiculos()
-            elif choice == '5':
-                return
-            else:
-                print("Opcion invalida, por favor intente nuevamente.")
+            choice = input("""
+    1. Crear Vehiculo
+    2. Editar Vehiculo
+    3. Eliminar Vehiculo
+    4. Listar Vehiculos
+    5. Volver al menu principal
+    Seleccione una opcion: """
+                        )
+            match choice:
+                case '1':
+                    self.crearVehiculo()
+                case '2':
+                    self.editarVehiculo()
+                case '3':
+                    self.eliminarVehiculo()
+                case '4':
+                    self.listarVehiculos()
+                case '5':
+                    return
+                case default:
+                #   default agarra todo lo que no es 12345 incluso 5 puede ser "" que sería enter
+                    print("Opcion invalida, por favor intente nuevamente.")
+                # Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
 
     def crearVehiculo(self):
         # Solicitar datos y crear el vehiculo
