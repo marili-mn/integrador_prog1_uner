@@ -24,30 +24,6 @@
         "estado": "Reservado"
     },
     {
-        "id": 3,
-        "placa": "POI990",
-        "marca": "toyota",
-        "modelo": "etios",
-        "tipoVehiculo": "auto compacto",
-        "anio": 2024,
-        "kilometraje": 100,
-        "precioCompra": 30000.0,
-        "precioVenta": 50000.0,
-        "estado": "Disponible"
-    },
-    {
-        "id": 4,
-        "placa": "xyt678",
-        "marca": "chevrolet",
-        "modelo": "onix",
-        "tipoVehiculo": "compactos",
-        "anio": 2024,
-        "kilometraje": 1000,
-        "precioCompra": 10000.0,
-        "precioVenta": 40000.0,
-        "estado": "Vendido"
-    },
-    {
         "id": 5,
         "patente": "CVE 3000",
         "marca": "camaro",
@@ -118,5 +94,29 @@
         "precioCompra": 2300.0,
         "precioVenta": 4000.0,
         "estado": "Reservado"
+    },
+    {
+        "id": 11,
+        "patente": "cve 3232",
+        "marca": "ford",
+        "modelo": "focus",
+        "tipo": "Sedan",
+        "anio": 2004,
+        "kilometraje": 200000,
+        "precioCompra": 2000.0,
+        "precioVenta": 3000.0,
+        "estado": "Disponible"
+    },
+    {
+        "id": 10,
+        "patente": "CV6 6666",
+        "marca": "susuki",
+        "modelo": "natalia",
+        "tipo": "pick up",
+        "anio": 1980,
+        "kilometraje": 55555555,
+        "precioCompra": 100.0,
+        "precioVenta": 200.0,
+        "estado": "Disponible"
     }
 ]

@@ -11,19 +11,19 @@
     {
         "id": 2,
         "nombre": "Martina",
-        "apellido": "Gomez",
         "documento": "87654321",
+        "apellido": "Gomez",
         "direccion": "Avenida Siempreviva 742",
         "celular": "987-6543",
         "email": "maria.gomez@example.com"
     },
     {
-        "id": 3,
-        "nombre": "Juansito",
-        "documento": "22456765",
-        "apellido": "Anacleto",
-        "direccion": "asdasd 123",
-        "celular": "123456789",
-        "email": "JuansitoA@gmail.com"
+        "id": 4,
+        "nombre": "Marilina",
+        "documento": "666666666",
+        "apellido": "Anderson",
+        "direccion": "Estrada 666",
+        "celular": "6666666666",
+        "email": "fandelosgatos@gmail.com"
     }
 ]
