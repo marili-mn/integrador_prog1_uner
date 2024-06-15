@@ -32,11 +32,13 @@ class InterfazConcesionario:
     def mainMenu(self):
         self.clearTextCLI()
         choice = input("""
-    1. Gestionar Vehiculos
-    2. Gestionar Clientes
-    3. Registrar Transaccion
-    4. Salir          
-    Seleccione una opcion: """
+╔ =========== MENU =========== ╗
+║  1. Gestionar Vehiculos      ║
+║  2. Gestionar Clientes       ║
+║  3. Registrar Transaccion    ║
+║  4. Salir                    ║ 
+╚ ============================ ╝
+   Seleccione una opcion: """
                         )
         match choice:
             case '1':
@@ -52,18 +54,20 @@ class InterfazConcesionario:
                 self.clearTextCLI()
                 sys.exit()
             case default:
-                print("Opcion invalida, por favor intentelo nuevamente.")
+                print("  Opcion invalida, por favor intentelo nuevamente.")
                 self.mainMenu()
    
 
     def modificarVehiculos(self):
         choice = input("""
-    1. Crear Vehiculo
-    2. Editar Vehiculo
-    3. Eliminar Vehiculo
-    4. Listar Vehiculos
-    5. Volver al menu principal
-    Seleccione una opcion: """
+╔ ============ MENU =========== ╗
+║  1. Crear Vehiculo            ║
+║  2. Editar Vehiculo           ║
+║  3. Eliminar Vehiculo         ║
+║  4. Listar Vehiculos          ║
+║  5. Volver al menu principal  ║
+╚ ============================= ╝
+  Seleccione una opcion: """
                         )
         match choice:
             case '1':
@@ -77,69 +81,70 @@ class InterfazConcesionario:
             case '5':
                 self.mainMenu()
             case default:
-                print("Opcion invalida, por favor intente nuevamente.")
+                print("  Opcion invalida, por favor intente nuevamente.")
                 self.modificarVehiculos()
 
     def crearVehiculo(self):
         # Solicitar datos y crear el vehiculo
-        patente = input("Ingrese la patente del vehiculo: ")
-        marca = input("Ingrese la marca del vehiculo: ")
-        modelo = input("Ingrese el modelo del vehiculo: ")
-        tipoVehiculo = input("Ingrese el tipo del vehiculo (Sedán, SUV, Pick Up, etc): ")
-        anio = int(input("Ingrese el año del vehiculo: "))
-        kilometraje = int(input("Ingrese el kilometraje del vehiculo: "))
-        precioCompra = float(input("Ingrese el precio de compra del vehiculo: "))
-        precioVenta = float(input("Ingrese el precio de venta del vehiculo: "))
-        estado = input("Ingrese el estado del vehiculo (Disponible, Reservado, Vendido): ")
+        patente = input("  Ingrese la patente del vehiculo: ")
+        marca = input("  Ingrese la marca del vehiculo: ")
+        modelo = input("  Ingrese el modelo del vehiculo: ")
+        tipoVehiculo = input("  Ingrese el tipo del vehiculo (Sedán, SUV, Pick Up, etc): ")
+        anio = int(input("  Ingrese el año del vehiculo: "))
+        kilometraje = int(input("  Ingrese el kilometraje del vehiculo: "))
+        precioCompra = float(input("  Ingrese el precio de compra del vehiculo: "))
+        precioVenta = float(input("  Ingrese el precio de venta del vehiculo: "))
+        estado = input("  Ingrese el estado del vehiculo (Disponible, Reservado, Vendido): ")
         vehiculoId = len(self.vehiculosDb.obtenerTodosLosRegistros()) + 1
         nuevoVehiculo = Vehicle(vehiculoId, patente, marca, modelo, tipoVehiculo, anio, kilometraje, precioCompra, precioVenta, estado)
         self.vehiculosDb.agregarRegistro(nuevoVehiculo.a_dict())
-        print("Vehiculo creado correctamente.")
+        print("  Vehiculo creado correctamente.")
 
         self.callBackFunction(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
 
     def editarVehiculo(self):
         # Solicitar ID del vehículo y editar los datos
-        vehiculoId = int(input("Ingrese el ID del vehiculo a editar: "))
+        vehiculoId = int(input("  Ingrese el ID del vehiculo a editar: "))
         vehiculo = self.vehiculosDb.buscarRegistrosPorId(vehiculoId)
         if vehiculo:
-            print("Deje en blanco si no desea modificar el campo.")
-            patente = input(f"Patente actual ({vehiculo['patente']}): ") or vehiculo['patente']
-            marca = input(f"Marca actual ({vehiculo['marca']}): ") or vehiculo['marca']
-            modelo = input(f"Modelo actual ({vehiculo['modelo']}): ") or vehiculo['modelo']
-            tipoVehiculo = input(f"Tipo actual ({vehiculo['tipo']}): ") or vehiculo['tipo']
-            anio = input(f"Año actual ({vehiculo['anio']}): ") or vehiculo['anio']
-            kilometraje = input(f"Kilometraje actual ({vehiculo['kilometraje']}): ") or vehiculo['kilometraje']
+            print("  Deje en blanco si no desea modificar el campo.")
+            patente = input(f"  Patente actual ({vehiculo['patente']}): ") or vehiculo['patente']
+            marca = input(f"  Marca actual ({vehiculo['marca']}): ") or vehiculo['marca']
+            modelo = input(f"  Modelo actual ({vehiculo['modelo']}): ") or vehiculo['modelo']
+            tipoVehiculo = input(f"  Tipo actual ({vehiculo['tipo']}): ") or vehiculo['tipo']
+            anio = input(f"  Año actual ({vehiculo['anio']}): ") or vehiculo['anio']
+            kilometraje = input(f"  Kilometraje actual ({vehiculo['kilometraje']}): ") or vehiculo['kilometraje']
             precioCompra = input(f"Precio de compra actual ({vehiculo['precioCompra']}): ") or vehiculo['precioCompra']
             precioVenta = input(f"Precio de venta actual ({vehiculo['precioVenta']}): ") or vehiculo['precioVenta']
-            estado = input(f"Estado actual ({vehiculo['estado']}): ") or vehiculo['estado']
+            estado = input(f"  Estado actual ({vehiculo['estado']}): ") or vehiculo['estado']
 
             actualizarVehiculo = Vehicle(vehiculoId, patente, marca, modelo, tipoVehiculo, int(anio), int(kilometraje), float(precioCompra), float(precioVenta), estado)
             self.vehiculosDb.actualizarRegistro(vehiculoId, actualizarVehiculo.a_dict())
-            print("Vehiculo actualizado exitosamente.")
+            print("  Vehiculo actualizado exitosamente.")
         else:
-            print("Vehiculo no encontrado.")
+            print("  Vehiculo no encontrado.")
         self.callBackFunction(self.modificarVehiculos(), self.mainMenu(), "Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal" )
 
     def eliminarVehiculo(self):
         # Solicitar ID del vehiculo y eliminarlo
-        vehiculoId = int(input("Ingrese el ID del vehiculo a eliminar: "))
+        vehiculoId = int(input("  Ingrese el ID del vehiculo a eliminar: "))
         self.vehiculosDb.eliminarRegistro(vehiculoId)
-        print("Vehiculo eliminado exitosamente.")
+        print("  Vehiculo eliminado exitosamente.")
         self.callBackFunction(self.modificarVehiculos(), self.mainMenu() ,"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
 
     def listarVehiculos(self):
         # Mostrar todos los vehiculos
         vehiculos = self.vehiculosDb.obtenerTodosLosRegistros()
         if vehiculos:
+            print("╔ ============================================================================================================================ ╗")
             # Imprimir encabezados de la tabla
-            print("{:<5} {:<10} {:<10} {:<10} {:<15} {:<5} {:<12} {:<15} {:<15}".format(
+            print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}    ║".format(
                 "ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta"
             ))
-            print("=" * 100)
+            print("=" * 128)
             #Imprimir cada vehiculo en formato de tabla
             for vehiculo in vehiculos:
-                print("{:<5} {:<10} {:<10} {:<10} {:<15} {:<5} {:<12} {:<15} {:<15}".format(
+                print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}    ║".format(
                     vehiculo.get('id', 'N/A'),
                     vehiculo.get('placa', 'N/A'),
                     vehiculo.get('marca', 'N/A'),
@@ -150,9 +155,10 @@ class InterfazConcesionario:
                     vehiculo.get('precioCompra', 'N/A'),
                     vehiculo.get('precioVenta', 'N/A')
                 ))
-        else:
+            print("╚ ============================================================================================================================ ╝")
             print("No hay vehiculos registrados.")
-        self.callBackFunction(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
+        else:
+            self.callBackFunction(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
         
     def listarClientes(self):
         # Mostrar todos los clientes en formato de tabla
@@ -169,19 +175,20 @@ class InterfazConcesionario:
             "Email": max(len(cliente.get('email', 'N/A')) for cliente in clientes),
         }
 
+        print("╔ =========================================================================================================== ╗")
         # Imprime los encabezados de las columnas
-        print("{:<{id_width}} {:<{nombre_width}} {:<{doc_width}} {:<{apellido_width}} {:<{direccion_width}} {:<{celular_width}} {:<{email_width}}".format(
+        print("║ {:<{id_width}}║ {:<{nombre_width}}║ {:<{doc_width}}║ {:<{apellido_width}}║ {:<{direccion_width}}║ {:<{celular_width}}║ {:<{email_width}}    ║".format(
             "ID", "Nombre", "Documento", "Apellido", "Direccion", "Celular", "Email",
             id_width=max_lengths["ID"] + 2, nombre_width=max_lengths["Nombre"] + 2,
             doc_width=max_lengths["Documento"] + 2, apellido_width=max_lengths["Apellido"] + 2,
             direccion_width=max_lengths["Direccion"] + 2, celular_width=max_lengths["Celular"] + 2,
             email_width=max_lengths["Email"]
         ))
-        print("=" * (sum(max_lengths.values()) + 12))  # Línea divisoria
+        print("=" * (sum(max_lengths.values()) + 30))  # Línea divisoria
 
         # Imprime los datos de los clientes
         for cliente in clientes:
-            print("{:<{id_width}} {:<{nombre_width}} {:<{doc_width}} {:<{apellido_width}} {:<{direccion_width}} {:<{celular_width}} {:<{email_width}}".format(
+            print("║ {:<{id_width}}║ {:<{nombre_width}}║ {:<{doc_width}}║ {:<{apellido_width}}║ {:<{direccion_width}}║ {:<{celular_width}}║ {:<{email_width}}    ║".format(
                 cliente.get('id', 'N/A'),
                 cliente.get('nombre', 'N/A'),
                 cliente.get('documento', 'N/A'),
@@ -195,18 +202,21 @@ class InterfazConcesionario:
                 email_width=max_lengths["Email"]
             ))
         else:
-            print("No hay clientes registrados.")
+            print("╚ =========================================================================================================== ╝")
+            print("  No hay clientes registrados.")
         self.callBackFunction(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
 
     def administrarCustomers(self):
         # similar a modificarVehiculos
         choice = input("""
-    1. Crear Cliente
-    2. Editar Cliente
-    3. Eliminar Cliente
-    4. Listar Clientes
-    5. Volver al Menu Principal 
-    Seleccione una opcion: """
+╔ ============ MENU =========== ╗
+║  1. Crear Cliente             ║
+║  2. Editar Cliente            ║
+║  3. Eliminar Cliente          ║
+║  4. Listar Clientes           ║
+║  5. Volver al Menu Principal  ║
+╚ ============================= ╝
+   Seleccione una opcion: """
                         )
         match choice:
             case '1':
@@ -220,44 +230,44 @@ class InterfazConcesionario:
             case '5':
                 return
             case default:
-                print("Opcion invalida, por favor intente nuevamente.")
+                print("  Opcion invalida, por favor intente nuevamente.")
             #   Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
 
     def crearCustomer(self):
-        nombre = input("Ingrese el nombre del cliente: ")
-        documento = input("Ingrese el documento del cliente: ")
-        apellido = input("Ingrese el apellido del cliente: ")
-        direccion = input("Ingrese la direccion del cliente: ")
-        celular = input("Ingrese el telefono del cliente: ")
-        email = input("Ingrese el correo electronico del cliente: ")
+        nombre = input("  Ingrese el nombre del cliente: ")
+        documento = input("  Ingrese el documento del cliente: ")
+        apellido = input("  Ingrese el apellido del cliente: ")
+        direccion = input("  Ingrese la direccion del cliente: ")
+        celular = input("  Ingrese el telefono del cliente: ")
+        email = input("  Ingrese el correo electronico del cliente: ")
 
         customerId = len(self.customDb.obtenerTodosLosRegistros()) + 1
         nuevoCustomer = Customer(customerId, nombre, documento, apellido, direccion, celular, email)
         self.customDb.agregarRegistro(nuevoCustomer.a_dict())
-        print("Cliente creado exitosamente.")
+        print("  Cliente creado exitosamente.")
 
     def editarCustomer(self):
-        customerId = int(input("Ingrese el ID del cliente a editar: "))
+        customerId = int(input("  Ingrese el ID del cliente a editar: "))
         customer = self.customDb.buscarRegistrosPorId(customerId)
         if customer:
-            print("Deje en blanco si no desea modificar el campo.")
-            nombre = input(f"Nombre actual ({customer['nombre']}): ") or customer['nombre']
-            documento = input(f"Documento actual ({customer['documento']}): ") or customer['documento']
-            apellido = input(f"Apellido actual ({customer['apellido']}): ") or customer['apellido']
-            direccion = input(f"Direccion actual ({customer['direccion']}): ") or customer['direccion']
-            celular = input(f"Telefono actual ({customer['celular']}): ") or customer['celular']
-            email = input(f"Correo electronico actual ({customer['email']}): ") or customer['email']
+            print("  Deje en blanco si no desea modificar el campo.")
+            nombre = input(f"  Nombre actual ({customer['nombre']}): ") or customer['nombre']
+            documento = input(f"  Documento actual ({customer['documento']}): ") or customer['documento']
+            apellido = input(f"  Apellido actual ({customer['apellido']}): ") or customer['apellido']
+            direccion = input(f"  Direccion actual ({customer['direccion']}): ") or customer['direccion']
+            celular = input(f"  Telefono actual ({customer['celular']}): ") or customer['celular']
+            email = input(f"  Correo electronico actual ({customer['email']}): ") or customer['email']
 
             actualizarCustomer = Customer(customerId, nombre, documento, apellido, direccion, celular, email)
             self.customDb.actualizarRegistro(customerId, actualizarCustomer.a_dict())
-            print("Cliente actualizado exitosamente.")
+            print("  Cliente actualizado exitosamente.")
         else:
-            print("Cliente no encontrado.")
+            print("  Cliente no encontrado.")
 
     def eliminarCustomer(self):
         customerId = int(input("Ingrese el ID del cliente a eliminar: "))
         self.customDb.eliminarRegistro(customerId)
-        print("Cliente eliminado exitosamente.")
+        print("  Cliente eliminado exitosamente.")
 
     def listaCustomers(self):
         customers = self.customDb.obtenerTodosLosRegistros()
@@ -266,10 +276,12 @@ class InterfazConcesionario:
 
     def administrarTransacciones(self):
         choice = input("""
-    1. Crear Transaccion
-    2. Listar Transacciones
-    3. Volver al Menu Principal
-    Seleccione una opcion: """
+╔ =========== MENU ============ ╗
+║  1. Crear Transaccion         ║
+║  2. Listar Transacciones      ║
+║  3. Volver al Menu Principal  ║
+╚ ============================= ╝  
+   Seleccione una opcion: """
                   )
         match choice:
             case '1':
@@ -283,14 +295,14 @@ class InterfazConcesionario:
             #   Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
 
     def crearTransaccion(self):
-        customerId = int(input("Ingrese el ID del cliente: "))
-        vehiculoId = int(input("Ingrese el ID del vehiculo: "))
-        precioVenta = float(input("Ingrese el precio de venta: "))
+        customerId = int(input("  Ingrese el ID del cliente: "))
+        vehiculoId = int(input("  Ingrese el ID del vehiculo: "))
+        precioVenta = float(input("  Ingrese el precio de venta: "))
 
         transaccionId = len(self.transaccionesDb.obtenerTodosLosRegistros()) + 1
         nuevoTransaccion = Transaction(transaccionId, customerId, vehiculoId, precioVenta)
         self.transaccionesDb.agregarRegistro(nuevoTransaccion.a_dict())
-        print("Transaccion registrada exitosamente.")
+        print("  Transaccion registrada exitosamente.")
 
     def listarTransacciones(self):
         transacciones = self.transaccionesDb.obtenerTodosLosRegistros()
