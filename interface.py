@@ -13,11 +13,24 @@ class InterfazConcesionario:
         self.customDb = Database('data/clientes.json')
         self.transaccionesDb = Database('data/transacciones.json')
 
-    def mainMenu(self):
+    def clearTextCLI(self):
         if os.name == 'nt':
             os.system('cls')  # Comando para Windows
         elif os.name == 'posix':
-            os.system('clear')  # comando para Linux 
+            os.system('clear')  #Comando para Mac/Linux
+    
+    def callBackFunction(funcion1, funcion2, texto):
+        #Funcion 1 es el submenu, funcion 2 la principal, texto la opcion a evaluar
+        opcion = input(texto + "o Enter para salir: ").lower
+        if opcion == "1":
+            funcion1
+        elif opcion == "2":
+            funcion2
+        elif opcion == "":
+            exit()
+
+    def mainMenu(self):
+        self.clearTextCLI()
         choice = input("""
     1. Gestionar Vehiculos
     2. Gestionar Clientes
@@ -27,20 +40,21 @@ class InterfazConcesionario:
                         )
         match choice:
             case '1':
-                if os.name == 'nt':
-                    os.system('cls')  # Comando para Windows
-                elif os.name == 'posix':
-                    os.system('clear')  # comando para Linux 
+                self.clearTextCLI()
                 self.modificarVehiculos()
             case '2':
+                self.clearTextCLI()
                 self.administrarCustomers()
             case '3':
+                self.clearTextCLI()
                 self.administrarTransacciones()
             case '4':
+                self.clearTextCLI()
                 sys.exit()
             case default:
                 print("Opcion invalida, por favor intentelo nuevamente.")
-            #   Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
+                self.mainMenu()
+   
 
     def modificarVehiculos(self):
         choice = input("""
@@ -61,11 +75,10 @@ class InterfazConcesionario:
             case '4':
                 self.listarVehiculos()
             case '5':
-                return
+                self.mainMenu()
             case default:
-                #   default agarra todo lo que no es 12345 incluso 5 podria cambiarse por "" que sería enter
                 print("Opcion invalida, por favor intente nuevamente.")
-                # Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
+                self.modificarVehiculos()
 
     def crearVehiculo(self):
         # Solicitar datos y crear el vehiculo
@@ -78,11 +91,12 @@ class InterfazConcesionario:
         precioCompra = float(input("Ingrese el precio de compra del vehiculo: "))
         precioVenta = float(input("Ingrese el precio de venta del vehiculo: "))
         estado = input("Ingrese el estado del vehiculo (Disponible, Reservado, Vendido): ")
-
         vehiculoId = len(self.vehiculosDb.obtenerTodosLosRegistros()) + 1
         nuevoVehiculo = Vehicle(vehiculoId, patente, marca, modelo, tipoVehiculo, anio, kilometraje, precioCompra, precioVenta, estado)
         self.vehiculosDb.agregarRegistro(nuevoVehiculo.a_dict())
         print("Vehiculo creado correctamente.")
+
+        self.callBackFunction(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
 
     def editarVehiculo(self):
         # Solicitar ID del vehículo y editar los datos
@@ -105,12 +119,14 @@ class InterfazConcesionario:
             print("Vehiculo actualizado exitosamente.")
         else:
             print("Vehiculo no encontrado.")
+        self.callBackFunction(self.modificarVehiculos(), self.mainMenu(), "Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal" )
 
     def eliminarVehiculo(self):
         # Solicitar ID del vehiculo y eliminarlo
         vehiculoId = int(input("Ingrese el ID del vehiculo a eliminar: "))
         self.vehiculosDb.eliminarRegistro(vehiculoId)
         print("Vehiculo eliminado exitosamente.")
+        self.callBackFunction(self.modificarVehiculos(), self.mainMenu() ,"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
 
     def listarVehiculos(self):
         # Mostrar todos los vehiculos
@@ -136,7 +152,7 @@ class InterfazConcesionario:
                 ))
         else:
             print("No hay vehiculos registrados.")
-
+        self.callBackFunction(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
         
     def listarClientes(self):
         # Mostrar todos los clientes en formato de tabla
@@ -180,6 +196,7 @@ class InterfazConcesionario:
             ))
         else:
             print("No hay clientes registrados.")
+        self.callBackFunction(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
 
     def administrarCustomers(self):
         # similar a modificarVehiculos
