@@ -19,15 +19,19 @@ class InterfazConcesionario:
         elif os.name == 'posix':
             os.system('clear')  #Comando para Mac/Linux
     
-    def volverAtrasYSalir(funcion1, funcion2, texto):
+    def volverAtrasYSalir(self , subMenu , menu , texto):
         #Funcion 1 es el submenu, funcion 2 la principal, texto la opcion a evaluar
-        opcion = input(texto + "o Enter para salir: ").lower
-        if opcion == "1":
-            funcion1
-        elif opcion == "2":
-            funcion2
-        elif opcion == "":
-            exit()
+        opcion = input("Ingrese 1 para volver a " + texto + " 2 para ir al Menu Principal o Enter para salir: ").lower
+        match opcion:
+            case "1":
+                elegida = subMenu
+            case "2":
+                elegida = menu
+            case "":
+                exit()
+            case default:
+                self.volverAtrasYSalir()
+        return elegida
 
     def mainMenu(self):
         self.limpiarPantalla()
