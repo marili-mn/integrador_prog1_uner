@@ -21,7 +21,10 @@ class InterfazConcesionario:
     
     def volverAtrasYSalir(self , subMenu , menu , texto):
         #Funcion 1 es el submenu, funcion 2 la principal, texto la opcion a evaluar
-        opcion = input("Ingrese 1 para volver a " + texto + " 2 para ir al Menu Principal o Enter para salir: ").lower
+        print("Ingrese 1 para volver a " + texto)
+        print("Ingrese  2 para ir al Menu Principal")
+        print("Enter para salir")
+        opcion = input("Ingrese una opción:").lower
         match opcion:
             case "1":
                 elegida = subMenu
@@ -103,8 +106,7 @@ class InterfazConcesionario:
         nuevoVehiculo = Vehicle(vehiculoId, patente, marca, modelo, tipoVehiculo, anio, kilometraje, precioCompra, precioVenta, estado)
         self.vehiculosDb.agregarRegistro(nuevoVehiculo.a_dict())
         print("  Vehiculo creado correctamente.")
-
-        self.volverAtrasYSalir(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
+        self.volverAtrasYSalir(self.modificarVehiculos, self.mainMenu,"el SubMenu de Vehiculos")
 
     def editarVehiculo(self):
         # Solicitar ID del vehículo y editar los datos
@@ -121,20 +123,19 @@ class InterfazConcesionario:
             precioCompra = input(f"Precio de compra actual ({vehiculo['precioCompra']}): ") or vehiculo['precioCompra']
             precioVenta = input(f"Precio de venta actual ({vehiculo['precioVenta']}): ") or vehiculo['precioVenta']
             estado = input(f"  Estado actual ({vehiculo['estado']}): ") or vehiculo['estado']
-
             actualizarVehiculo = Vehicle(vehiculoId, patente, marca, modelo, tipoVehiculo, int(anio), int(kilometraje), float(precioCompra), float(precioVenta), estado)
             self.vehiculosDb.actualizarRegistro(vehiculoId, actualizarVehiculo.a_dict())
             print("  Vehiculo actualizado exitosamente.")
         else:
             print("  Vehiculo no encontrado.")
-        self.volverAtrasYSalir(self.modificarVehiculos(), self.mainMenu(), "Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal" )
+        self.volverAtrasYSalir(self.modificarVehiculos, self.mainMenu,"el SubMenu de Vehiculos")
 
     def eliminarVehiculo(self):
         # Solicitar ID del vehiculo y eliminarlo
         vehiculoId = int(input("  Ingrese el ID del vehiculo a eliminar: "))
         self.vehiculosDb.eliminarRegistro(vehiculoId)
         print("  Vehiculo eliminado exitosamente.")
-        self.volverAtrasYSalir(self.modificarVehiculos(), self.mainMenu() ,"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
+        self.volverAtrasYSalir(self.modificarVehiculos, self.mainMenu,"el SubMenu de Vehiculos")
 
     def listarVehiculos(self):
         # Mostrar todos los vehiculos
@@ -160,9 +161,9 @@ class InterfazConcesionario:
                     vehiculo.get('precioVenta', 'N/A')
                 ))
             print("╚ ============================================================================================================================ ╝")
-            print("No hay vehiculos registrados.")
         else:
-            self.volverAtrasYSalir(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
+            print("No hay vehiculos registrados.")
+        self.volverAtrasYSalir(self.modificarVehiculos, self.mainMenu,"el SubMenu de Vehiculos")
         
     def listarClientes(self):
         # Mostrar todos los clientes en formato de tabla
@@ -177,36 +178,35 @@ class InterfazConcesionario:
             "Direccion": max(len(cliente.get('direccion', 'N/A')) for cliente in clientes),
             "Celular": max(len(cliente.get('celular', 'N/A')) for cliente in clientes),
             "Email": max(len(cliente.get('email', 'N/A')) for cliente in clientes),
-        }
-
-        print("╔ =========================================================================================================== ╗")
-        # Imprime los encabezados de las columnas
-        print("║ {:<{id_width}}║ {:<{nombre_width}}║ {:<{doc_width}}║ {:<{apellido_width}}║ {:<{direccion_width}}║ {:<{celular_width}}║ {:<{email_width}}    ║".format(
+            }
+            print("╔=============================================================================================================╗")
+            # Imprime los encabezados de las columnas
+            print("║ {:<{id_width}}║ {:<{nombre_width}}║ {:<{doc_width}}║ {:<{apellido_width}}║ {:<{direccion_width}}║ {:<{celular_width}}║ {:<{email_width}}    ║".format(
             "ID", "Nombre", "Documento", "Apellido", "Direccion", "Celular", "Email",
             id_width=max_lengths["ID"] + 2, nombre_width=max_lengths["Nombre"] + 2,
             doc_width=max_lengths["Documento"] + 2, apellido_width=max_lengths["Apellido"] + 2,
             direccion_width=max_lengths["Direccion"] + 2, celular_width=max_lengths["Celular"] + 2,
             email_width=max_lengths["Email"]
-        ))
-        print("=" * (sum(max_lengths.values()) + 30))  # Línea divisoria
-
-        # Imprime los datos de los clientes
-        for cliente in clientes:
-            print("║ {:<{id_width}}║ {:<{nombre_width}}║ {:<{doc_width}}║ {:<{apellido_width}}║ {:<{direccion_width}}║ {:<{celular_width}}║ {:<{email_width}}    ║".format(
-                cliente.get('id', 'N/A'),
-                cliente.get('nombre', 'N/A'),
-                cliente.get('documento', 'N/A'),
-                cliente.get('apellido', 'N/A'),
-                cliente.get('direccion', 'N/A'),
-                cliente.get('celular', 'N/A'),
-                cliente.get('email', 'N/A'),
-                id_width=max_lengths["ID"] + 2, nombre_width=max_lengths["Nombre"] + 2,
-                doc_width=max_lengths["Documento"] + 2, apellido_width=max_lengths["Apellido"] + 2,
-                direccion_width=max_lengths["Direccion"] + 2, celular_width=max_lengths["Celular"] + 2,
-                email_width=max_lengths["Email"]
             ))
-        else:
-            print("╚ =========================================================================================================== ╝")
+            print("=" * (sum(max_lengths.values()) + 31))  # Línea divisoria
+
+            # Imprime los datos de los clientes
+            for cliente in clientes:
+                print("║ {:<{id_width}}║ {:<{nombre_width}}║ {:<{doc_width}}║ {:<{apellido_width}}║ {:<{direccion_width}}║ {:<{celular_width}}║ {:<{email_width}}    ║".format(
+                    cliente.get('id', 'N/A'),
+                    cliente.get('nombre', 'N/A'),
+                    cliente.get('documento', 'N/A'),
+                    cliente.get('apellido', 'N/A'),
+                    cliente.get('direccion', 'N/A'),
+                    cliente.get('celular', 'N/A'),
+                    cliente.get('email', 'N/A'),
+                    id_width=max_lengths["ID"] + 2, nombre_width=max_lengths["Nombre"] + 2,
+                    doc_width=max_lengths["Documento"] + 2, apellido_width=max_lengths["Apellido"] + 2,
+                    direccion_width=max_lengths["Direccion"] + 2, celular_width=max_lengths["Celular"] + 2,
+                    email_width=max_lengths["Email"]
+                ))
+                print("╚=============================================================================================================╝")
+        else:    
             print("  No hay clientes registrados.")
         self.volverAtrasYSalir(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
 
@@ -273,10 +273,10 @@ class InterfazConcesionario:
         self.customDb.eliminarRegistro(customerId)
         print("  Cliente eliminado exitosamente.")
 
-    def listaCustomers(self):
-        customers = self.customDb.obtenerTodosLosRegistros()
-        for customer in customers:
-            print(customer)
+#    def listaCustomers(self):
+#        customers = self.customDb.obtenerTodosLosRegistros()
+#        for customer in customers:
+#            print(customer)
 
     def administrarTransacciones(self):
         choice = input("""
