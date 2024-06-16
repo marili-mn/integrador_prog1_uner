@@ -13,13 +13,13 @@ class InterfazConcesionario:
         self.customDb = Database('data/clientes.json')
         self.transaccionesDb = Database('data/transacciones.json')
 
-    def clearTextCLI(self):
+    def limpiarPantalla(self):
         if os.name == 'nt':
             os.system('cls')  # Comando para Windows
         elif os.name == 'posix':
             os.system('clear')  #Comando para Mac/Linux
     
-    def callBackFunction(funcion1, funcion2, texto):
+    def volverAtrasYSalir(funcion1, funcion2, texto):
         #Funcion 1 es el submenu, funcion 2 la principal, texto la opcion a evaluar
         opcion = input(texto + "o Enter para salir: ").lower
         if opcion == "1":
@@ -30,7 +30,7 @@ class InterfazConcesionario:
             exit()
 
     def mainMenu(self):
-        self.clearTextCLI()
+        self.limpiarPantalla()
         choice = input("""
 ╔ =========== MENU =========== ╗
 ║  1. Gestionar Vehiculos      ║
@@ -42,16 +42,16 @@ class InterfazConcesionario:
                         )
         match choice:
             case '1':
-                self.clearTextCLI()
+                self.limpiarPantalla()
                 self.modificarVehiculos()
             case '2':
-                self.clearTextCLI()
+                self.limpiarPantalla()
                 self.administrarCustomers()
             case '3':
-                self.clearTextCLI()
+                self.limpiarPantalla()
                 self.administrarTransacciones()
             case '4':
-                self.clearTextCLI()
+                self.limpiarPantalla()
                 sys.exit()
             case default:
                 print("  Opcion invalida, por favor intentelo nuevamente.")
@@ -100,7 +100,7 @@ class InterfazConcesionario:
         self.vehiculosDb.agregarRegistro(nuevoVehiculo.a_dict())
         print("  Vehiculo creado correctamente.")
 
-        self.callBackFunction(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
+        self.volverAtrasYSalir(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
 
     def editarVehiculo(self):
         # Solicitar ID del vehículo y editar los datos
@@ -123,14 +123,14 @@ class InterfazConcesionario:
             print("  Vehiculo actualizado exitosamente.")
         else:
             print("  Vehiculo no encontrado.")
-        self.callBackFunction(self.modificarVehiculos(), self.mainMenu(), "Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal" )
+        self.volverAtrasYSalir(self.modificarVehiculos(), self.mainMenu(), "Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal" )
 
     def eliminarVehiculo(self):
         # Solicitar ID del vehiculo y eliminarlo
         vehiculoId = int(input("  Ingrese el ID del vehiculo a eliminar: "))
         self.vehiculosDb.eliminarRegistro(vehiculoId)
         print("  Vehiculo eliminado exitosamente.")
-        self.callBackFunction(self.modificarVehiculos(), self.mainMenu() ,"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
+        self.volverAtrasYSalir(self.modificarVehiculos(), self.mainMenu() ,"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
 
     def listarVehiculos(self):
         # Mostrar todos los vehiculos
@@ -158,7 +158,7 @@ class InterfazConcesionario:
             print("╚ ============================================================================================================================ ╝")
             print("No hay vehiculos registrados.")
         else:
-            self.callBackFunction(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
+            self.volverAtrasYSalir(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
         
     def listarClientes(self):
         # Mostrar todos los clientes en formato de tabla
@@ -204,7 +204,7 @@ class InterfazConcesionario:
         else:
             print("╚ =========================================================================================================== ╝")
             print("  No hay clientes registrados.")
-        self.callBackFunction(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
+        self.volverAtrasYSalir(self.modificarVehiculos(), self.mainMenu(),"Ingrese 1 para volver a modificar vehiculos o 2 para volver al menu principal")
 
     def administrarCustomers(self):
         # similar a modificarVehiculos
