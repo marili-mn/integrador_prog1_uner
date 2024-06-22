@@ -24,6 +24,7 @@ class InterfazConcesionario:
     def volverAtrasYSalir(self, subMenu, texto):
         while True:
             opcion = input(f"  Ingrese 1 para volver a {texto}\n  Ingrese 2 para ir al Menú Principal\n  Enter para salir\n  Ingrese una opción: ").strip().lower()
+            self.limpiarPantalla()
             if opcion == "1":
                 subMenu()
                 break
@@ -48,22 +49,22 @@ class InterfazConcesionario:
 ╚ ============================ ╝
    Seleccione una opcion: """
                         )
+        self.limpiarPantalla()
         match choice:
+
             case '1':
-                self.limpiarPantalla()
-                self.modificarVehiculos()
+                opcion = self.modificarVehiculos()
             case '2':
-                self.limpiarPantalla()
-                self.administrarClientes()
+                opcion = self.administrarClientes()
             case '3':
-                self.limpiarPantalla()
-                self.administrarTransacciones()
+                opcion = self.administrarTransacciones()
             case '4':
-                self.limpiarPantalla()
-                sys.exit()
+                opcion = sys.exit()
             case default:
                 print("  Opción invalida, por favor inténtelo nuevamente.")
-                self.mainMenu()
+                opcion = self.mainMenu()
+        self.limpiarPantalla()
+        return opcion
    
 
     def modificarVehiculos(self):
@@ -235,10 +236,11 @@ class InterfazConcesionario:
             case '4':
                 self.listarClientes()
             case '5':
-                return
+                self.mainMenu()
             case default:
                 print("  Opcion invalida, por favor intente nuevamente.")
-            #   Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
+                self.administrarClientes()
+
 
     def crearCliente(self):
         nombre = input("  Ingrese el nombre del cliente: ")
@@ -303,10 +305,10 @@ class InterfazConcesionario:
             case '2':
                 self.listarTransacciones()
             case '3':
-                return
+                self.mainMenu()
             case default:
                 print("Opcion invalida, por favor intente nuevamente.")
-            #   Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
+                self.administrarTransacciones()
 
     def crearTransaccion(self):
         cliente_id = int(input("  Ingrese el ID del cliente: "))
