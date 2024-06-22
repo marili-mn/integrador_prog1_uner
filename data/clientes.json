@@ -1,6 +1,6 @@
 [
     {
-        "id": 1,
+        "item_id": 1,
         "nombre": "Juan",
         "apellido": "Perez",
         "documento": "12345678",
@@ -9,7 +9,7 @@
         "email": "juan.perez@example.com"
     },
     {
-        "id": 2,
+        "item_id": 2,
         "nombre": "Martina",
         "apellido": "Gomez",
         "documento": "87654321",
@@ -18,7 +18,7 @@
         "email": "maria.gomez@example.com"
     },
     {
-        "id": 3,
+        "item_id": 3,
         "nombre": "Juansito",
         "documento": "22456765",
         "apellido": "Anacleto",

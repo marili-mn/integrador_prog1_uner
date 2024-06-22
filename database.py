@@ -26,14 +26,15 @@ class Database:
 
     def actualizarRegistro(self, registroId, actualizarRegistro):
         for idx, registro in enumerate(self.data):
-            if registro.get('id') == registroId:
+
+            if registro.get('item_id') == registroId:
                 self.data[idx] = actualizarRegistro
                 self.guardarData()
                 return
         raise ValueError("Registro no disponible")
 
     def eliminarRegistro(self, registroId):
-        self.data = [registro for registro in self.data if registro.get('id') != registroId]
+        self.data = [registro for registro in self.data if registro.get('item_id') != registroId]
         self.guardarData()
 
     def obtenerTodosLosRegistros(self):
@@ -41,6 +42,6 @@ class Database:
 
     def buscarRegistrosPorId(self, registroId):
         for registro in self.data:
-            if registro.get('id') == registroId:
+            if registro.get('item_id') == registroId:
                 return registro
         return None
