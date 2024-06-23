@@ -36,18 +36,6 @@
         "estado": "Disponible"
     },
     {
-        "item_id": 5,
-        "patente": "CVE 3000",
-        "marca": "camaro",
-        "modelo": "camarote",
-        "tipo_vehiculo": "Sedan",
-        "anio": 2007,
-        "kilometraje": 0,
-        "precio_compra": 1000.0,
-        "precio_venta": 2000.0,
-        "estado": "Disponible"
-    },
-    {
         "item_id": 6,
         "patente": "CVE 9999",
         "marca": "Lamborgini",

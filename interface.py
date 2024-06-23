@@ -154,10 +154,15 @@ class InterfazConcesionario:
 
     def eliminarVehiculo(self):
         # Solicitar ID del vehiculo y eliminarlo
-        item_id = int(input("  Ingrese el ID del vehículo a eliminar: "))
-        self.vehiculosDb.eliminarRegistro(item_id)
-        print("  Vehículo eliminado exitosamente.")
-        self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de vehículos")
+        try:
+            item_id = int(input("  Ingrese el ID del vehículo a eliminar: "))
+            self.vehiculosDb.eliminarRegistro(item_id)
+            print("  Vehículo eliminado exitosamente.")
+            self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de vehículos")
+        except ValueError:
+            self.limpiarPantalla()
+            print("El ID del vehículo debe ser un número")
+            self.eliminarVehiculo()
 
     def listarVehiculos(self):
         # Mostrar todos los vehiculos
@@ -276,16 +281,25 @@ class InterfazConcesionario:
 
 
     def editarCustomer(self):
-        item_id = int(input("  Ingrese el ID del cliente a editar: "))
+        
+        try:
+            item_id = int(input("  Ingrese el ID del cliente a editar: "))
+        except ValueError:
+            
+            self.limpiarPantalla()
+            print("El ID del cliente a editar debe ser un número")
+            print("Intentelo otra vez")
+            self.editarCustomer()
+
         cliente = self.customDb.buscarRegistrosPorId(item_id)
         if cliente:
             print("  Deje en blanco si no desea modificar el campo.")
-            nombre = input(f"  Nombre actual ({cliente['nombre']}): ") or cliente['nombre']
-            documento = input(f"  Documento actual ({cliente['documento']}): ") or cliente['documento']
-            apellido = input(f"  Apellido actual ({cliente['apellido']}): ") or cliente['apellido']
+            nombre = input(f"  Nombre actual ({cliente['nombre']}): ").capitalize() or cliente['nombre']
+            documento = input(f"  Documento actual ({cliente['documento']}): ").strip() or cliente['documento']
+            apellido = input(f"  Apellido actual ({cliente['apellido']}): ").capitalize() or cliente['apellido']
             direccion = input(f"  Direccion actual ({cliente['direccion']}): ") or cliente['direccion']
-            celular = input(f"  Telefono actual ({cliente['celular']}): ") or cliente['celular']
-            email = input(f"  Correo electronico actual ({cliente['email']}): ") or cliente['email']
+            celular = input(f"  Telefono actual ({cliente['celular']}): ").strip() or cliente['celular']
+            email = input(f"  Correo electronico actual ({cliente['email']}): ").strip().lower() or cliente['email']
 
             actualizarCustomer = Clientes(item_id, nombre, documento, apellido, direccion, celular, email)
             self.customDb.actualizarRegistro(item_id, actualizarCustomer.a_dict())
@@ -297,9 +311,17 @@ class InterfazConcesionario:
 
 
     def eliminarCustomer(self):
-        item_id = int(input("Ingrese el ID del cliente a eliminar: "))
-        self.customDb.eliminarRegistro(item_id)
-        print("  Cliente eliminado exitosamente.")
+        try:
+
+            item_id = int(input("Ingrese el ID del cliente a eliminar: "))
+            self.customDb.eliminarRegistro(item_id)
+            print("  Cliente eliminado exitosamente.")
+        except ValueError:
+            self.limpiarPantalla()
+            print("El ID del cliente debe ser un número")
+            print("Intentelo otra vez")
+            self.eliminarCustomer()
+
         self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes")
 
 
