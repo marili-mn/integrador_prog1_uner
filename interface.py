@@ -126,16 +126,25 @@ class InterfazConcesionario:
         item_id = int(input("  Ingrese el ID del vehículo a editar: "))
         vehiculo = self.vehiculosDb.buscarRegistrosPorId(item_id)
         if vehiculo:
-            print("  Deje en blanco si no desea modificar el campo.")
-            patente = input(f"  Patente actual ({vehiculo['patente']}): ") or vehiculo['patente']
-            marca = input(f"  Marca actual ({vehiculo['marca']}): ") or vehiculo['marca']
-            modelo = input(f"  Modelo actual ({vehiculo['modelo']}): ") or vehiculo['modelo']
-            tipo_vehiculo = input(f"  Tipo actual ({vehiculo['tipo_vehiculo']}): ") or vehiculo['tipo_vehiculo']
-            anio = input(f"  Año actual ({vehiculo['anio']}): ") or vehiculo['anio']
-            kilometraje = input(f"  Kilometraje actual ({vehiculo['kilometraje']}): ") or vehiculo['kilometraje']
-            precio_compra = input(f"  Precio de compra actual ({vehiculo['precio_compra']}): ") or vehiculo['precio_compra']
-            precio_venta = input(f"  Precio de venta actual ({vehiculo['precio_venta']}): ") or vehiculo['precio_venta']
-            estado = input(f"  Estado actual ({vehiculo['estado']}): ") or vehiculo['estado']
+            try:
+
+                print("  Deje en blanco si no desea modificar el campo.")
+                patente = input(f"  Patente actual ({vehiculo['patente']}): ").upper() or vehiculo['patente']
+                marca = input(f"  Marca actual ({vehiculo['marca']}): ").capitalize() or vehiculo['marca']
+                modelo = input(f"  Modelo actual ({vehiculo['modelo']}): ").capitalize() or vehiculo['modelo']
+                tipo_vehiculo = input(f"  Tipo actual ({vehiculo['tipo_vehiculo']}): ").capitalize() or vehiculo['tipo_vehiculo']
+                anio = int(input(f"  Año actual ({vehiculo['anio']}): ") or vehiculo['anio'])
+                kilometraje = input(f"  Kilometraje actual ({vehiculo['kilometraje']}): ").strip() or vehiculo['kilometraje']
+                precio_compra = float(input(f"  Precio de compra actual ({vehiculo['precio_compra']}): ") or vehiculo['precio_compra'])
+                precio_venta = float(input(f"  Precio de venta actual ({vehiculo['precio_venta']}): ") or vehiculo['precio_venta'])
+                estado = input(f"  Estado actual ({vehiculo['estado']}): ").strip().capitalize() or vehiculo['estado']
+
+            except ValueError:
+                self.limpiarPantalla()
+                print("  Precio de compra, precio de venta y año deben ingresarse en formato numérico")
+                print("  Ingrese los datos del vehículo nuevamente: ")
+                self.editarVehiculo()
+
             actualizarVehiculo = Vehiculos(item_id, patente, marca, modelo, tipo_vehiculo, int(anio), int(kilometraje), float(precio_compra), float(precio_venta), estado)
             self.vehiculosDb.actualizarRegistro(item_id, actualizarVehiculo.a_dict())
             print("  Vehículo actualizado exitosamente.")
