@@ -24,7 +24,6 @@ class InterfazConcesionario:
     def volverAtrasYSalir(self, subMenu, texto):
         while True:
             opcion = input(f"  Ingrese 1 para volver a {texto}\n  Ingrese 2 para ir al Menú Principal\n  Enter para salir\n  Ingrese una opción: ").strip().lower()
-            self.limpiarPantalla()
             if opcion == "1":
                 subMenu()
                 break
@@ -35,8 +34,6 @@ class InterfazConcesionario:
                 sys.exit()
             else:
                 print("  Opción inválida, por favor inténtelo nuevamente.")
-
-
 
     def mainMenu(self):
         self.limpiarPantalla()
@@ -49,22 +46,22 @@ class InterfazConcesionario:
 ╚ ============================ ╝
    Seleccione una opcion: """
                         )
-        self.limpiarPantalla()
         match choice:
-
             case '1':
-                opcion = self.modificarVehiculos()
+                self.limpiarPantalla()
+                self.modificarVehiculos()
             case '2':
-                opcion = self.administrarClientes()
+                self.limpiarPantalla()
+                self.administrarClientes()
             case '3':
-                opcion = self.administrarTransacciones()
+                self.limpiarPantalla()
+                self.administrarTransacciones()
             case '4':
-                opcion = sys.exit()
+                self.limpiarPantalla()
+                sys.exit()
             case default:
                 print("  Opción invalida, por favor inténtelo nuevamente.")
-                opcion = self.mainMenu()
-        self.limpiarPantalla()
-        return opcion
+                self.mainMenu()
    
 
     def modificarVehiculos(self):
@@ -94,22 +91,35 @@ class InterfazConcesionario:
                 self.modificarVehiculos()
 
     def crearVehiculo(self):
+
         # Solicitar datos y crear el vehiculo
-        patente = input("  Ingrese la patente del vehículo: ")
-        marca = input("  Ingrese la marca del vehículo: ")
-        modelo = input("  Ingrese el modelo del vehículo: ")
-        tipo_vehiculo = input("  Ingrese el tipo del vehiculo (Sedán, SUV, Pick Up, etc): ")
-        anio = int(input("  Ingrese el año del vehículo: "))
-        kilometraje = int(input("  Ingrese el kilometraje del vehículo: "))
-        precio_compra = float(input("  Ingrese el precio de compra del vehículo: "))
-        precio_venta = float(input("  Ingrese el precio de venta del vehículo: "))
-        estado = input("  Ingrese el estado del vehículo (Disponible, Reservado, Vendido): ")
+        try:
+
+            patente = input("  Ingrese la patente del vehículo: ").upper()
+            marca = input("  Ingrese la marca del vehículo: ").capitalize()
+            modelo = input("  Ingrese el modelo del vehículo: ").capitalize()
+            tipo_vehiculo = input("  Ingrese el tipo del vehiculo (Sedán, SUV, Pick Up, etc): ").capitalize()
+            anio = int(input("  Ingrese el año del vehículo: "))
+            kilometraje = input("  Ingrese el kilometraje del vehículo: ").strip()
+            precio_compra = float(input("  Ingrese el precio de compra del vehículo: "))
+            precio_venta = float(input("  Ingrese el precio de venta del vehículo: "))
+            estado = input("  Ingrese el estado del vehículo (Disponible, Reservado, Vendido): ").strip().capitalize()
+
+        except ValueError:
+            self.limpiarPantalla()
+            print("  Precio de compra, precio de venta y año deben ingresarse en formato numérico")
+            print("  Ingrese los datos del vehículo nuevamente: ")
+            self.crearVehiculo()
+
         item_id = len(self.vehiculosDb.obtenerTodosLosRegistros()) + 1
         nuevoVehiculo = Vehiculos(item_id, patente, marca, modelo, tipo_vehiculo, anio, kilometraje, precio_compra, precio_venta, estado)
         self.vehiculosDb.agregarRegistro(nuevoVehiculo.a_dict())
+        self.limpiarPantalla()
         print("  Vehículo creado correctamente.")
         self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de vehículos")
 
+        
+            
 
     def editarVehiculo(self):
         # Solicitar ID del vehículo y editar los datos
@@ -154,7 +164,7 @@ class InterfazConcesionario:
             for vehiculo in vehiculos:
                 print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}    ║".format(
                     vehiculo.get('item_id', 'N/A'),
-                    vehiculo.get('placa', 'N/A'),
+                    vehiculo.get('patente', 'N/A'),
                     vehiculo.get('marca', 'N/A'),
                     vehiculo.get('modelo', 'N/A'),
                     vehiculo.get('tipo_vehiculo', 'N/A'),
@@ -236,19 +246,18 @@ class InterfazConcesionario:
             case '4':
                 self.listarClientes()
             case '5':
-                self.mainMenu()
+                return
             case default:
                 print("  Opcion invalida, por favor intente nuevamente.")
-                self.administrarClientes()
-
+            #   Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
 
     def crearCliente(self):
-        nombre = input("  Ingrese el nombre del cliente: ")
-        documento = input("  Ingrese el documento del cliente: ")
-        apellido = input("  Ingrese el apellido del cliente: ")
-        direccion = input("  Ingrese la direccion del cliente: ")
-        celular = input("  Ingrese el telefono del cliente: ")
-        email = input("  Ingrese el correo electronico del cliente: ")
+        nombre = input("  Ingrese el nombre del cliente: ").capitalize()
+        documento = input("  Ingrese el documento del cliente: ").strip()
+        apellido = input("  Ingrese el apellido del cliente: ").capitalize()
+        direccion = input("  Ingrese la direccion del cliente: ").capitalize()
+        celular = input("  Ingrese el telefono del cliente: ").strip()
+        email = input("  Ingrese el correo electronico del cliente: ").strip().lower()
 
         item_id = len(self.customDb.obtenerTodosLosRegistros()) + 1
         nuevoCliente = Clientes(item_id, nombre, documento, apellido, direccion, celular, email)
@@ -305,21 +314,28 @@ class InterfazConcesionario:
             case '2':
                 self.listarTransacciones()
             case '3':
-                self.mainMenu()
+                return
             case default:
                 print("Opcion invalida, por favor intente nuevamente.")
-                self.administrarTransacciones()
+            #   Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
 
     def crearTransaccion(self):
-        cliente_id = int(input("  Ingrese el ID del cliente: "))
-        auto_id = int(input("  Ingrese el ID del vehículo: "))
-        precio_venta = float(input("  Ingrese el precio de venta: "))
+
+        try:
+            cliente_id = int(input("  Ingrese el ID del cliente: "))
+            auto_id = int(input("  Ingrese el ID del vehículo: "))
+            precio_venta = float(input("  Ingrese el precio de venta: "))
+        except ValueError:
+            self.limpiarPantalla()
+            print("  Los datos ingresados deben ser valores numeros ")
+            print("  Ingrese los datos de la transacción nuevamente: ")
+            self.crearTransaccion()
+        
         item_id = len(self.transaccionesDb.obtenerTodosLosRegistros()) + 1
         nuevoTransaccion = Transaccion(item_id, cliente_id, auto_id, precio_venta)
         self.transaccionesDb.agregarRegistro(nuevoTransaccion.a_dict())
         print("  Transacción registrada exitosamente.")
         self.volverAtrasYSalir(self.administrarTransacciones, "el SubMenú de Transacciones")
-
 
     #def listarTransacciones(self):
      #   transacciones = self.transaccionesDb.obtenerTodosLosRegistros()
