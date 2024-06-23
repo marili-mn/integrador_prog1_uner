@@ -19,14 +19,11 @@
     },
     {
         "item_id": 3,
-        "cliente_id": 3,
-        "auto_id": 4,
-        "precio_venta": 7000.0
-    },
-    {
-        "item_id": 4,
-        "cliente_id": 7,
-        "auto_id": 5,
-        "precio_venta": 40000.0
+        "id_vehiculo": 3,
+        "id_cliente": 3,
+        "tipo_transaccion": "3",
+        "fecha": "2022-12-02",
+        "monto": 2111.0,
+        "observaciones": "Todo ok"
     }
 ]

@@ -1,14 +1,20 @@
 class Transaccion:
-    def __init__(self, item_id, cliente_id, auto_id, precio_venta):
+    def __init__(self, item_id, id_vehiculo, id_cliente, tipo_transaccion, fecha, monto, observaciones):
         self.item_id = item_id
-        self.cliente_id = cliente_id
-        self.auto_id = auto_id
-        self.precio_venta = precio_venta
+        self.id_vehiculo = id_vehiculo
+        self.id_cliente = id_cliente
+        self.tipo_transaccion = tipo_transaccion
+        self.fecha = fecha
+        self.monto = monto
+        self.observaciones = observaciones 
 
     def a_dict(self):
         return {
             'item_id': self.item_id,
-            'cliente_id': self.cliente_id,
-            'auto_id': self.auto_id,
-            'precio_venta': self.precio_venta
+            'id_vehiculo': self.id_vehiculo,
+            'id_cliente': self.id_cliente,
+            'tipo_transaccion': self.tipo_transaccion,
+            'fecha': self.fecha,
+            'monto': self.monto,
+            'observaciones': self.observaciones
         }
