@@ -41,40 +41,45 @@ class InterfazConcesionario:
     # MENU BUSCADOR DE VEHÍCULOS
     def buscador (self):
         resultados = None
-        vehiculo= input("Desea buscar por:    \n1. Patente:   \n2. Marca: \n3. Modelo:    \n4. Precio de compra:  \n5. Precio de venta:  \n6. Estado: ").lower()
+        vehiculo= input(" \n1. Patente   \n2. Marca \n3. Modelo    \n4. Precio de compra  \n5. Precio de venta  \n6. Estado \n7. Volver al menu principal\n   Seleccione una opción:").lower()
         match vehiculo:
-            case "patente":
+            case "1":
                 patente= input("Ingrese la patente del vehículo: ").upper()
                 resultados = self.vehiculosDb.buscarRegistrosPorParametro(patente,'patente')
                 if resultados ==[]:
                     print("  No se encontró ningún vehículo con esa patente.")               
-            case "marca":
+            case "2":
                 marca= input("Ingrese la marca del vehículo: ").capitalize()
                 resultados = self.vehiculosDb.buscarRegistrosPorParametro(marca,'marca')
                 if resultados ==[]:
                     print("  No se encontró ningún vehículo con esa marca.")               
-            case "modelo":
+            case "3":
                 modelo= input("Ingrese el modelo del vehículo: ").capitalize()
                 resultados = self.vehiculosDb.buscarRegistrosPorParametro(modelo,'modelo')
                 if resultados ==[]:
                     print("  No se encontró ningún vehículo con esa modelo.")                                           
-            case "precio de compra":
+            case "4":
                 precio_compra= input("Ingrese el precio de compra del vehículo: ")
                 resultados = self.vehiculosDb.buscarRegistrosPorParametro(precio_compra, 'precio_compra')                    
                 if resultados ==[]:
                     print("  No se encontró ningún vehículo con esa compra.")               
-            case "precio de venta":
+            case "5":
                 precio_venta= input("Ingrese el precio de venta del vehículo: ") 
                 resultados = self.vehiculosDb.buscarRegistrosPorParametro(precio_venta, 'precio_venta')                    
                 if resultados ==[]:
                     print("  No se encontró ningún vehículo con ese precio de venta.")               
-            case "estado":
+            case "6":
                 estado= input("Ingrese el estado del vehículo: ").capitalize() 
                 resultados = self.vehiculosDb.buscarRegistrosPorParametro(estado,'estado')
                 if resultados ==[]:
-                    print("  No se encontró ningún vehículo con ese precio de compra.")               
+                    print("  No se encontró ningún vehículo con ese precio de compra.")
+            case "7":
+                self.limpiarPantalla()
+                self.mainMenu()               
             case _:
                 print("  Opción invalida, por favor inténtelo nuevamente.")
+                input("  Presione Cualquier tecla para continuar...")
+                self.limpiarPantalla()
                 self.buscador()
         #if resultados:
         if resultados is not None:
@@ -99,7 +104,9 @@ class InterfazConcesionario:
                         ))
                     print("╚ ============================================================================================================================================== ╝")
         else:
-            print("  No se encontraron resultados para su búsqueda.")           
+            print("  No se encontraron resultados para su búsqueda.")
+        input("  Presione Cualquier tecla para continuar...")
+        self.limpiarPantalla()           
         self.volverAtrasYSalir(self.buscador(), "Menú Principal")
 
 
@@ -128,8 +135,6 @@ class InterfazConcesionario:
             case '4':
                 self.limpiarPantalla()
                 sys.exit()
-            case '5':
-                self.buscador()
             case default:
                 print("  Opción invalida, por favor inténtelo nuevamente.")
                 self.mainMenu()
