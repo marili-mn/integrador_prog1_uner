@@ -26,7 +26,14 @@ class InterfazConcesionario:
 
     def volverAtrasYSalir(self, subMenu, texto):
         while True:
-            opcion = input(f"  Ingrese 1 para volver a {texto}\n  Ingrese 2 para ir al Menú Principal\n  Enter para salir\n  Ingrese una opción: ").strip().lower()
+            opcion = input(f"""
+╔ ========================== MENU ========================== ╗              
+║   Ingrese 1 para volver a {texto}      ║
+║   Ingrese 2 para ir al Menú Principal                      ║
+║   Enter para salir                                         ║
+╚ ========================================================== ╝
+    Ingrese una opción: """ 
+              ).strip().lower()
             if opcion == "1":
                 subMenu()
                 break
@@ -41,7 +48,18 @@ class InterfazConcesionario:
     # MENU BUSCADOR DE VEHÍCULOS
     def buscador (self):
         resultados = None
-        vehiculo= input(" \n1. Patente   \n2. Marca \n3. Modelo    \n4. Precio de compra  \n5. Precio de venta  \n6. Estado \n7. Volver al menu principal\n   Seleccione una opción:").lower()
+        vehiculo= input("""
+╔ ========================== MENU ========================== ╗
+║  1. Patente                                                ║
+║  2. Marca                                                  ║
+║  3. Modelo                                                 ║
+║  4. Precio de compra                                       ║
+║  5. Precio de venta                                        ║
+║  6. Estado                                                 ║
+║  7. Volver al Menú Principal                               ║
+╚ ========================================================== ╝
+    Seleccione una opción: """
+    ).lower()
         match vehiculo:
             case "1":
                 patente= input("Ingrese la patente del vehículo: ").upper()
@@ -114,12 +132,12 @@ class InterfazConcesionario:
         choice = ""
         self.limpiarPantalla()
         choice = input("""
-╔ =========== MENU =========== ╗
-║  1. Gestionar Vehículos      ║
-║  2. Gestionar Clientes       ║
-║  3. Gestionar Transacciones  ║
-║  4. Salir                    ║ 
-╚ ============================ ╝
+╔ ========================== MENU ========================== ╗
+║  1. Gestionar Vehículos                                    ║
+║  2. Gestionar Clientes                                     ║
+║  3. Gestionar Transacciones                                ║
+║  4. Salir                                                  ║ 
+╚ ========================================================== ╝
    Seleccione una opcion: """
                         )
         match choice:
@@ -142,14 +160,14 @@ class InterfazConcesionario:
 
     def modificarVehiculos(self):
         opcion = input("""
-╔ ============ MENU =========== ╗
-║  1. Crear Vehículo            ║
-║  2. Editar Vehículo           ║
-║  3. Eliminar Vehículo         ║
-║  4. Listar Vehículos          ║
-║  5. Buscar Vehículos          ║
-║  6. Volver al menu principal  ║
-╚ ============================= ╝
+╔ ========================== MENU ========================== ╗
+║  1. Crear Vehículo                                         ║
+║  2. Editar Vehículo                                        ║
+║  3. Eliminar Vehículo                                      ║
+║  4. Listar Vehículos                                       ║
+║  5. Buscar Vehículos                                       ║
+║  6. Volver al Menú Principal                               ║
+╚ ========================================================== ╝
   Seleccione una opción: """
                         )
         match opcion:
@@ -201,7 +219,7 @@ class InterfazConcesionario:
         self.vehiculosDb.agregarRegistro(nuevoVehiculo.a_dict())
         self.limpiarPantalla()
         print("  Vehículo creado correctamente.")
-        self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de vehículos")
+        self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de vehículos    ")
 
         
             
@@ -235,7 +253,7 @@ class InterfazConcesionario:
             print("  Vehículo actualizado exitosamente.")
         else:
             print("  Vehículo no encontrado.")
-        self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de vehículos")
+        self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de vehículos    ")
 
     def eliminarVehiculo(self):
         # Solicitar ID del vehiculo y eliminarlo
@@ -243,7 +261,7 @@ class InterfazConcesionario:
             item_id = int(input("  Ingrese el ID del vehículo a eliminar: "))
             self.vehiculosDb.eliminarRegistro(item_id)
             print("  Vehículo eliminado exitosamente.")
-            self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de vehículos")
+            self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de vehículos    ")
         except ValueError:
             self.limpiarPantalla()
             print("El ID del vehículo debe ser un número")
@@ -275,7 +293,7 @@ class InterfazConcesionario:
             print("╚ ============================================================================================================================ ╝")
         else:
             print("No hay vehículos registrados.")
-        self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de Vehículos")
+        self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de Vehículos    ")
         
     def listarClientes(self):
         # Mostrar todos los clientes en formato de tabla
@@ -291,7 +309,7 @@ class InterfazConcesionario:
             "Celular": max(len(cliente.get('celular', 'N/A')) for cliente in clientes),
             "Email": max(len(cliente.get('email', 'N/A')) for cliente in clientes),
             }
-            print("╔=============================================================================================================╗")
+            print("╔ ============================================================================================================= ╗")
             # Imprime los encabezados de las columnas
             print("║ {:<{id_width}}║ {:<{nombre_width}}║ {:<{doc_width}}║ {:<{apellido_width}}║ {:<{direccion_width}}║ {:<{celular_width}}║ {:<{email_width}}    ║".format(
             "ID", "Nombre", "Documento", "Apellido", "Direccion", "Celular", "Email",
@@ -317,22 +335,22 @@ class InterfazConcesionario:
                     direccion_width=max_lengths["Direccion"] + 2, celular_width=max_lengths["Celular"] + 2,
                     email_width=max_lengths["Email"]
                 ))
-                print("╚=============================================================================================================╝")
+                print("╚ ============================================================================================================= ╝")
         else:    
             print("  No hay clientes registrados.")
-        self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes")
+        self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes     ")
 
 
     def administrarClientes(self):
         # similar a modificarVehiculos
         choice = input("""
-╔ ============ MENU =========== ╗
-║  1. Crear Cliente             ║
-║  2. Editar Cliente            ║
-║  3. Eliminar Cliente          ║
-║  4. Listar Clientes           ║
-║  5. Volver al Menu Principal  ║
-╚ ============================= ╝
+╔ ========================== MENU ========================== ╗
+║  1. Crear Cliente                                          ║
+║  2. Editar Cliente                                         ║
+║  3. Eliminar Cliente                                       ║
+║  4. Listar Clientes                                        ║
+║  5. Volver al Menú Principal                               ║
+╚ ========================================================== ╝
    Seleccione una opcion: """
                         )
         match choice:
@@ -362,7 +380,7 @@ class InterfazConcesionario:
         nuevoCliente = Clientes(item_id, nombre, documento, apellido, direccion, celular, email)
         self.customDb.agregarRegistro(nuevoCliente.a_dict())
         print("  Cliente creado exitosamente.")
-        self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes")
+        self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes     ")
 
 
     def editarCustomer(self):
@@ -391,7 +409,7 @@ class InterfazConcesionario:
             print("  Cliente actualizado exitosamente.")
         else:
             print("  Cliente no encontrado.")
-            self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes")
+            self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes     ")
 
 
 
@@ -407,7 +425,7 @@ class InterfazConcesionario:
             print("Intentelo otra vez")
             self.eliminarCustomer()
 
-        self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes")
+        self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes     ")
 
 
 #    def listaCustomers(self):
@@ -417,11 +435,11 @@ class InterfazConcesionario:
 
     def administrarTransacciones(self):
         choice = input("""
-╔ =========== MENU ============ ╗
-║  1. Crear Transacción         ║
-║  2. Listar Transacciones      ║
-║  3. Volver al Menu Principal  ║
-╚ ============================= ╝  
+╔ ========================== MENU ========================== ╗
+║  1. Crear Transacción                                      ║
+║  2. Listar Transacciones                                   ║
+║  3. Volver al Menú Principal                               ║
+╚ ========================================================== ╝ 
    Seleccione una opcion: """
                   )
         match choice:
