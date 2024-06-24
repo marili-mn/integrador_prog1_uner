@@ -9,6 +9,9 @@ from prettytable import PrettyTable
 #pip install prettytable
 #   Importamos las clases de los json
 
+global resultados
+resultados = []
+
 class InterfazConcesionario:
     def __init__(self):
         self.vehiculosDb = Database('data/vehiculos.json')
@@ -35,7 +38,73 @@ class InterfazConcesionario:
             else:
                 print("  Opción inválida, por favor inténtelo nuevamente.")
 
+    # MENU BUSCADOR DE VEHÍCULOS
+    def buscador (self):
+        resultados = None
+        vehiculo= input("Desea buscar por:    \n1. Patente:   \n2. Marca: \n3. Modelo:    \n4. Precio de compra:  \n5. Precio de venta:  \n6. Estado: ").lower()
+        match vehiculo:
+            case "patente":
+                patente= input("Ingrese la patente del vehículo: ").upper()
+                resultados = self.vehiculosDb.buscarRegistrosPorParametro(patente,'patente')
+                if resultados ==[]:
+                    print("  No se encontró ningún vehículo con esa patente.")               
+            case "marca":
+                marca= input("Ingrese la marca del vehículo: ").capitalize()
+                resultados = self.vehiculosDb.buscarRegistrosPorParametro(marca,'marca')
+                if resultados ==[]:
+                    print("  No se encontró ningún vehículo con esa marca.")               
+            case "modelo":
+                modelo= input("Ingrese el modelo del vehículo: ").capitalize()
+                resultados = self.vehiculosDb.buscarRegistrosPorParametro(modelo,'modelo')
+                if resultados ==[]:
+                    print("  No se encontró ningún vehículo con esa modelo.")                                           
+            case "precio de compra":
+                precio_compra= input("Ingrese el precio de compra del vehículo: ")
+                resultados = self.vehiculosDb.buscarRegistrosPorParametro(precio_compra, 'precio_compra')                    
+                if resultados ==[]:
+                    print("  No se encontró ningún vehículo con esa compra.")               
+            case "precio de venta":
+                precio_venta= input("Ingrese el precio de venta del vehículo: ") 
+                resultados = self.vehiculosDb.buscarRegistrosPorParametro(precio_venta, 'precio_venta')                    
+                if resultados ==[]:
+                    print("  No se encontró ningún vehículo con ese precio de venta.")               
+            case "estado":
+                estado= input("Ingrese el estado del vehículo: ").capitalize() 
+                resultados = self.vehiculosDb.buscarRegistrosPorParametro(estado,'estado')
+                if resultados ==[]:
+                    print("  No se encontró ningún vehículo con ese precio de compra.")               
+            case _:
+                print("  Opción invalida, por favor inténtelo nuevamente.")
+                self.buscador()
+        #if resultados:
+        if resultados is not None:
+            for resultado in resultados:
+                    print("╔ ============================================================================================================================================== ╗")
+                    print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}║ {:<12}        ║".format(
+                        "ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta", "Estado"
+                    ))
+                    print("=" * 146)
+                        #Imprimir cada vehiculo en formato de tabla
+                    print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}║ {:<12}        ║".format(
+                            resultado.get('item_id' , 'N/A'),
+                            resultado.get('patente' , 'N/A'),
+                            resultado.get('marca' , 'N/A'),
+                            resultado.get('modelo' , 'N/A'),
+                            resultado.get('tipo_vehiculo' , 'N/A'),
+                            resultado.get('anio' , 'N/A'),
+                            resultado.get('kilometraje' , 'N/A'),
+                            resultado.get('precio_compra' , 'N/A'),
+                            resultado.get('precio_venta' , 'N/A'),
+                            resultado.get('estado' , 'N/A')
+                        ))
+                    print("╚ ============================================================================================================================================== ╝")
+        else:
+            print("  No se encontraron resultados para su búsqueda.")           
+        self.volverAtrasYSalir(self.buscador(), "Menú Principal")
+
+
     def mainMenu(self):
+        choice = ""
         self.limpiarPantalla()
         choice = input("""
 ╔ =========== MENU =========== ╗
@@ -59,32 +128,43 @@ class InterfazConcesionario:
             case '4':
                 self.limpiarPantalla()
                 sys.exit()
+            case '5':
+                self.buscador()
             case default:
                 print("  Opción invalida, por favor inténtelo nuevamente.")
                 self.mainMenu()
    
 
     def modificarVehiculos(self):
-        choice = input("""
+        opcion = input("""
 ╔ ============ MENU =========== ╗
 ║  1. Crear Vehículo            ║
 ║  2. Editar Vehículo           ║
 ║  3. Eliminar Vehículo         ║
 ║  4. Listar Vehículos          ║
-║  5. Volver al menu principal  ║
+║  5. Buscar Vehículos          ║
+║  6. Volver al menu principal  ║
 ╚ ============================= ╝
   Seleccione una opción: """
                         )
-        match choice:
+        match opcion:
             case '1':
+                self.limpiarPantalla()
                 self.crearVehiculo()
             case '2':
+                self.limpiarPantalla()
                 self.editarVehiculo()
             case '3':
+                self.limpiarPantalla()
                 self.eliminarVehiculo()
             case '4':
+                self.limpiarPantalla()
                 self.listarVehiculos()
             case '5':
+                self.limpiarPantalla()
+                self.buscador()
+            case '6':
+                self.limpiarPantalla()
                 self.mainMenu()
             case default:
                 print("  Opción invalida, por favor intente nuevamente.")
@@ -260,10 +340,10 @@ class InterfazConcesionario:
             case '4':
                 self.listarClientes()
             case '5':
-                return
+                self.mainMenu()
             case default:
-                print("  Opcion invalida, por favor intente nuevamente.")
-            #   Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
+                print("  Opción invalida, por favor intente nuevamente.")
+                self.administrarClientes()
 
     def crearCliente(self):
         nombre = input("  Ingrese el nombre del cliente: ").capitalize()
@@ -345,10 +425,10 @@ class InterfazConcesionario:
             case '2':
                 self.listarTransacciones()
             case '3':
-                return
+                self.mainMenu()
             case default:
-                print("Opcion invalida, por favor intente nuevamente.")
-            #   Aca hay q llamar denuevo a la función, pero creo que seria desde main, nose como xD
+                print("  Opción invalida, por favor intente nuevamente.")
+                self.administrarTransacciones()
 
     def crearTransaccion(self):
 
@@ -379,7 +459,7 @@ class InterfazConcesionario:
     def listarTransacciones(self):
         # Mostrar todas las transacciones en formato de tabla
         transacciones = self.transaccionesDb.obtenerTodosLosRegistros()
-
+        print(transacciones)
         if transacciones:
             table = PrettyTable()
             table.field_names = ["ID Transacción", "ID Vehículo", "ID Cliente", "Transacción", "Fecha", "Monto", "Observaciones"]

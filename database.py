@@ -45,3 +45,11 @@ class Database:
             if registro.get('item_id') == registroId:
                 return registro
         return None
+
+    def buscarRegistrosPorParametro(self, registroId, parametro):
+        coleccion =[]
+        for registro in self.data:
+            if registro.get(parametro) == registroId:
+                coleccion.append(registro)
+        return coleccion
+      
