@@ -54,3 +54,20 @@ Realizado el análisis de requerimientos con el gerente de la concesionaria se h
 
 - **Funcionalidad Extra:**
   - Se deberá desarrollar una funcionalidad extra del software a criterio del alumno/grupo. Esta nueva funcionalidad puede incluir, como por ejemplo: desarrollo de interfaz gráfica, consumo de una API externa, búsquedas avanzadas, nuevas funcionalidades similares a las anteriores que aporten valor agregado, etc.
+
+
+  ####
+  vehiculos:
+   buscamos ademas de loq  pide por estado ""okey""
+  FALTA!!!!!    poner las funciones a los input del buscador xcej capitalize ""AL FNAL"
+  ####
+  Clientes:
+  *******************buscar por DOCUMENTO x NOMBRE o por APELLIDO
+  ####
+  Transacciones:
+  imprir compras y ventas x:
+  cliente
+  vehiculos
+----  rango de fechas ---->
+------  con totalizador de monto de dinero
+  ####

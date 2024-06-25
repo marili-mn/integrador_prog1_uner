@@ -15,7 +15,7 @@ resultados = []
 class InterfazConcesionario:
     def __init__(self):
         self.vehiculosDb = Database('data/vehiculos.json')
-        self.customDb = Database('data/clientes.json')
+        self.clientesDb = Database('data/clientes.json')
         self.transaccionesDb = Database('data/transacciones.json')
 
     def limpiarPantalla(self):
@@ -37,80 +37,9 @@ class InterfazConcesionario:
                 sys.exit()
             else:
                 print("  Opción inválida, por favor inténtelo nuevamente.")
-
-    # MENU BUSCADOR DE VEHÍCULOS
-    def buscador (self):
-        resultados = None
-        vehiculo= input(" \n1. Patente   \n2. Marca \n3. Modelo    \n4. Precio de compra  \n5. Precio de venta  \n6. Estado \n7. Volver al menu principal\n   Seleccione una opción:").lower()
-        match vehiculo:
-            case "1":
-                patente= input("Ingrese la patente del vehículo: ").upper()
-                resultados = self.vehiculosDb.buscarRegistrosPorParametro(patente,'patente')
-                if resultados ==[]:
-                    print("  No se encontró ningún vehículo con esa patente.")               
-            case "2":
-                marca= input("Ingrese la marca del vehículo: ").capitalize()
-                resultados = self.vehiculosDb.buscarRegistrosPorParametro(marca,'marca')
-                if resultados ==[]:
-                    print("  No se encontró ningún vehículo con esa marca.")               
-            case "3":
-                modelo= input("Ingrese el modelo del vehículo: ").capitalize()
-                resultados = self.vehiculosDb.buscarRegistrosPorParametro(modelo,'modelo')
-                if resultados ==[]:
-                    print("  No se encontró ningún vehículo con esa modelo.")                                           
-            case "4":
-                precio_compra= input("Ingrese el precio de compra del vehículo: ")
-                resultados = self.vehiculosDb.buscarRegistrosPorParametro(precio_compra, 'precio_compra')                    
-                if resultados ==[]:
-                    print("  No se encontró ningún vehículo con esa compra.")               
-            case "5":
-                precio_venta= input("Ingrese el precio de venta del vehículo: ") 
-                resultados = self.vehiculosDb.buscarRegistrosPorParametro(precio_venta, 'precio_venta')                    
-                if resultados ==[]:
-                    print("  No se encontró ningún vehículo con ese precio de venta.")               
-            case "6":
-                estado= input("Ingrese el estado del vehículo: ").capitalize() 
-                resultados = self.vehiculosDb.buscarRegistrosPorParametro(estado,'estado')
-                if resultados ==[]:
-                    print("  No se encontró ningún vehículo con ese precio de compra.")
-            case "7":
-                self.limpiarPantalla()
-                self.mainMenu()               
-            case _:
-                print("  Opción invalida, por favor inténtelo nuevamente.")
-                input("  Presione Cualquier tecla para continuar...")
-                self.limpiarPantalla()
-                self.buscador()
-        #if resultados:
-        if resultados is not None:
-            for resultado in resultados:
-                    print("╔ ============================================================================================================================================== ╗")
-                    print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}║ {:<12}        ║".format(
-                        "ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta", "Estado"
-                    ))
-                    print("=" * 146)
-                        #Imprimir cada vehiculo en formato de tabla
-                    print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}║ {:<12}        ║".format(
-                            resultado.get('item_id' , 'N/A'),
-                            resultado.get('patente' , 'N/A'),
-                            resultado.get('marca' , 'N/A'),
-                            resultado.get('modelo' , 'N/A'),
-                            resultado.get('tipo_vehiculo' , 'N/A'),
-                            resultado.get('anio' , 'N/A'),
-                            resultado.get('kilometraje' , 'N/A'),
-                            resultado.get('precio_compra' , 'N/A'),
-                            resultado.get('precio_venta' , 'N/A'),
-                            resultado.get('estado' , 'N/A')
-                        ))
-                    print("╚ ============================================================================================================================================== ╝")
-        else:
-            print("  No se encontraron resultados para su búsqueda.")
-        input("  Presione Cualquier tecla para continuar...")
-        self.limpiarPantalla()           
-        self.volverAtrasYSalir(self.buscador(), "Menú Principal")
-
-
-    def mainMenu(self):
+#################################
+#################################
+    def mainMenu(self):        ##
         choice = ""
         self.limpiarPantalla()
         choice = input("""
@@ -120,27 +49,27 @@ class InterfazConcesionario:
 ║  3. Gestionar Transacciones  ║
 ║  4. Salir                    ║ 
 ╚ ============================ ╝
-   Seleccione una opcion: """
+   Seleccione una opcion: """  ##
                         )
         match choice:
             case '1':
                 self.limpiarPantalla()
-                self.modificarVehiculos()
+                self.gestionarVehiculos()
             case '2':
                 self.limpiarPantalla()
-                self.administrarClientes()
+                self.gestionarClientes()
             case '3':
                 self.limpiarPantalla()
-                self.administrarTransacciones()
+                self.gestionarTransacciones()
             case '4':
                 self.limpiarPantalla()
                 sys.exit()
             case default:
                 print("  Opción invalida, por favor inténtelo nuevamente.")
                 self.mainMenu()
-   
-
-    def modificarVehiculos(self):
+#################################
+#################################
+    def gestionarVehiculos(self):
         opcion = input("""
 ╔ ============ MENU =========== ╗
 ║  1. Crear Vehículo            ║
@@ -167,15 +96,16 @@ class InterfazConcesionario:
                 self.listarVehiculos()
             case '5':
                 self.limpiarPantalla()
-                self.buscador()
+                self.buscadorVehiculos()
             case '6':
                 self.limpiarPantalla()
                 self.mainMenu()
             case default:
                 print("  Opción invalida, por favor intente nuevamente.")
-                self.modificarVehiculos()
-
-    def crearVehiculo(self):
+                self.gestionarVehiculos()
+#################################
+#################################
+    def crearVehiculo(self):   ##
 
         # Solicitar datos y crear el vehiculo
         try:
@@ -201,12 +131,10 @@ class InterfazConcesionario:
         self.vehiculosDb.agregarRegistro(nuevoVehiculo.a_dict())
         self.limpiarPantalla()
         print("  Vehículo creado correctamente.")
-        self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de vehículos")
-
-        
-            
-
-    def editarVehiculo(self):
+        self.volverAtrasYSalir(self.gestionarVehiculos, "el SubMenú de vehículos")
+#################################
+#################################            
+    def editarVehiculo(self):  ##
         # Solicitar ID del vehículo y editar los datos
         item_id = int(input("  Ingrese el ID del vehículo a editar: "))
         vehiculo = self.vehiculosDb.buscarRegistrosPorId(item_id)
@@ -235,21 +163,23 @@ class InterfazConcesionario:
             print("  Vehículo actualizado exitosamente.")
         else:
             print("  Vehículo no encontrado.")
-        self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de vehículos")
-
-    def eliminarVehiculo(self):
+        self.volverAtrasYSalir(self.gestionarVehiculos, "el SubMenú de vehículos")
+#################################
+#################################
+    def eliminarVehiculo(self):##
         # Solicitar ID del vehiculo y eliminarlo
         try:
             item_id = int(input("  Ingrese el ID del vehículo a eliminar: "))
             self.vehiculosDb.eliminarRegistro(item_id)
             print("  Vehículo eliminado exitosamente.")
-            self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de vehículos")
+            self.volverAtrasYSalir(self.gestionarVehiculos, "el SubMenú de vehículos")
         except ValueError:
             self.limpiarPantalla()
             print("El ID del vehículo debe ser un número")
             self.eliminarVehiculo()
-
-    def listarVehiculos(self):
+#################################
+#################################
+    def listarVehiculos(self): ##
         # Mostrar todos los vehiculos
         vehiculos = self.vehiculosDb.obtenerTodosLosRegistros()
         if vehiculos:
@@ -275,11 +205,153 @@ class InterfazConcesionario:
             print("╚ ============================================================================================================================ ╝")
         else:
             print("No hay vehículos registrados.")
-        self.volverAtrasYSalir(self.modificarVehiculos, "el SubMenú de Vehículos")
+        self.volverAtrasYSalir(self.gestionarVehiculos, "el SubMenú de Vehículos")
+#################################
+#################################
+    def buscadorVehiculos (self):       ##
+        parametros = ["patente", "marca", "modelo", "precio_compra", "precio_venta", "estado"]
+        contador =len(parametros)
+        entrada = ""    #input
+        resultados = None
+        for i in range(contador):
+            a = ("\n " + "  " + str(i+1)+ ". " + "{:27}".format((str(parametros[i]).capitalize())) + "!")
+            entrada += a       
+        #####
+        opcion = input(entrada + "\n   " + str(len(parametros)+1) + ". Volver al menu principal   !" + "\n" + "    Seleccione una opción:    ")
+        if opcion.isdigit():
+            caso = int(opcion)-1
+            if caso < len(parametros):
+                    buscar = input("  Ingrese " + parametros[caso]+ ": ")
+                    if caso == -1:
+                        caso=0
+                    resultados= self.vehiculosDb.buscarRegistrosPorParametro(buscar, parametros[caso])
+                    if resultados ==[]:
+                        print("  No se encontró ningún vehículo con esos parámetros.")
+            elif caso == len(parametros):
+                self.mainMenu()
+        else:
+            print("  Opción inválida, por favor inténtelo nuevamente.")
+            input("  Presione Cualquier tecla para continuar...")
+            self.limpiarPantalla()
+            self.buscadorVehiculos()
+        #if resultados:
+        if resultados is not None:
+            for resultado in resultados:
+                    print("╔ ============================================================================================================================================== ╗")
+                    print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}║ {:<12}        ║".format(
+                        "ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta", "Estado"
+                    ))
+                    print("=" * 146)
+                        #Imprimir cada vehiculo en formato de tabla
+                    print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}║ {:<12}        ║".format(
+                            resultado.get('item_id' , 'N/A'),
+                            resultado.get('patente' , 'N/A'),
+                            resultado.get('marca' , 'N/A'),
+                            resultado.get('modelo' , 'N/A'),
+                            resultado.get('tipo_vehiculo' , 'N/A'),
+                            resultado.get('anio' , 'N/A'),
+                            resultado.get('kilometraje' , 'N/A'),
+                            resultado.get('precio_compra' , 'N/A'),
+                            resultado.get('precio_venta' , 'N/A'),
+                            resultado.get('estado' , 'N/A')
+                        ))
+                    print("╚ ============================================================================================================================================== ╝")
+        else:
+            print("  No se encontraron resultados para su búsqueda.")
+        input("  Presione Cualquier tecla para continuar...")
+        self.limpiarPantalla()           
+        self.volverAtrasYSalir(self.buscadorVehiculos(), "Menú Principal")
+#################################
+#################################
+    def gestionarClientes(self):#
+        choice = input("""     
+╔ ============ MENU =========== ╗
+║  1. Crear Cliente             ║
+║  2. Editar Cliente            ║
+║  3. Eliminar Cliente          ║
+║  4. Listar Clientes           ║
+║  5. Volver al Menu Principal  ║
+╚ ============================= ╝
+   Seleccione una opcion: """  ##
+                        )
+        match choice:
+            case '1':
+                self.crearCliente()
+            case '2':
+                self.editarClientes()
+            case '3':
+                self.eliminarClientes()
+            case '4':
+                self.listarClientes()
+            case '5':
+                self.mainMenu()
+            case default:
+                print("  Opción invalida, por favor intente nuevamente.")
+                self.gestionarClientes()
+#################################
+#################################                
+    def crearCliente(self):    ##
+        nombre = input("  Ingrese el nombre del cliente: ").capitalize()
+        documento = input("  Ingrese el documento del cliente: ").strip()
+        apellido = input("  Ingrese el apellido del cliente: ").capitalize()
+        direccion = input("  Ingrese la direccion del cliente: ").capitalize()
+        celular = input("  Ingrese el telefono del cliente: ").strip()
+        email = input("  Ingrese el correo electronico del cliente: ").strip().lower()
+
+        item_id = len(self.clientesDb.obtenerTodosLosRegistros()) + 1
+        nuevoCliente = Clientes(item_id, nombre, documento, apellido, direccion, celular, email)
+        self.clientesDb.agregarRegistro(nuevoCliente.a_dict())
+        print("  Cliente creado exitosamente.")
+        self.volverAtrasYSalir(self.gestionarClientes, "el SubMenú de Clientes")
+#################################
+#################################
+    def editarClientes(self):  ##
         
-    def listarClientes(self):
+        try:
+            item_id = int(input("  Ingrese el ID del cliente a editar: "))
+        except ValueError:
+            
+            self.limpiarPantalla()
+            print("El ID del cliente a editar debe ser un número")
+            print("Intentelo otra vez")
+            self.editarClientes()
+
+        cliente = self.clientesDb.buscarRegistrosPorId(item_id)
+        if cliente:
+            print("  Deje en blanco si no desea modificar el campo.")
+            nombre = input(f"  Nombre actual ({cliente['nombre']}): ").capitalize() or cliente['nombre']
+            documento = input(f"  Documento actual ({cliente['documento']}): ").strip() or cliente['documento']
+            apellido = input(f"  Apellido actual ({cliente['apellido']}): ").capitalize() or cliente['apellido']
+            direccion = input(f"  Direccion actual ({cliente['direccion']}): ") or cliente['direccion']
+            celular = input(f"  Telefono actual ({cliente['celular']}): ").strip() or cliente['celular']
+            email = input(f"  Correo electronico actual ({cliente['email']}): ").strip().lower() or cliente['email']
+
+            actualizarCliente = Clientes(item_id, nombre, documento, apellido, direccion, celular, email)
+            self.clientesDb.actualizarRegistro(item_id, actualizarCliente.a_dict())
+            print("  Cliente actualizado exitosamente.")
+        else:
+            print("  Cliente no encontrado.")
+            self.volverAtrasYSalir(self.gestionarClientes, "el SubMenú de Clientes")
+#################################
+#################################
+    def eliminarClientes(self):##
+        try:
+
+            item_id = int(input("Ingrese el ID del cliente a eliminar: "))
+            self.clientesDb.eliminarRegistro(item_id)
+            print("  Cliente eliminado exitosamente.")
+        except ValueError:
+            self.limpiarPantalla()
+            print("El ID del cliente debe ser un número")
+            print("Intentelo otra vez")
+            self.eliminarClientes()
+
+        self.volverAtrasYSalir(self.gestionarClientes, "el SubMenú de Clientes")
+#################################
+#################################
+    def listarClientes(self):  ##
         # Mostrar todos los clientes en formato de tabla
-        clientes = self.customDb.obtenerTodosLosRegistros()
+        clientes = self.clientesDb.obtenerTodosLosRegistros()
         if clientes:
             # Obtener la longitud maxima de los datos para cada columna
             max_lengths = {
@@ -320,102 +392,10 @@ class InterfazConcesionario:
                 print("╚=============================================================================================================╝")
         else:    
             print("  No hay clientes registrados.")
-        self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes")
-
-
-    def administrarClientes(self):
-        # similar a modificarVehiculos
-        choice = input("""
-╔ ============ MENU =========== ╗
-║  1. Crear Cliente             ║
-║  2. Editar Cliente            ║
-║  3. Eliminar Cliente          ║
-║  4. Listar Clientes           ║
-║  5. Volver al Menu Principal  ║
-╚ ============================= ╝
-   Seleccione una opcion: """
-                        )
-        match choice:
-            case '1':
-                self.crearCliente()
-            case '2':
-                self.editarCustomer()
-            case '3':
-                self.eliminarCustomer()
-            case '4':
-                self.listarClientes()
-            case '5':
-                self.mainMenu()
-            case default:
-                print("  Opción invalida, por favor intente nuevamente.")
-                self.administrarClientes()
-
-    def crearCliente(self):
-        nombre = input("  Ingrese el nombre del cliente: ").capitalize()
-        documento = input("  Ingrese el documento del cliente: ").strip()
-        apellido = input("  Ingrese el apellido del cliente: ").capitalize()
-        direccion = input("  Ingrese la direccion del cliente: ").capitalize()
-        celular = input("  Ingrese el telefono del cliente: ").strip()
-        email = input("  Ingrese el correo electronico del cliente: ").strip().lower()
-
-        item_id = len(self.customDb.obtenerTodosLosRegistros()) + 1
-        nuevoCliente = Clientes(item_id, nombre, documento, apellido, direccion, celular, email)
-        self.customDb.agregarRegistro(nuevoCliente.a_dict())
-        print("  Cliente creado exitosamente.")
-        self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes")
-
-
-    def editarCustomer(self):
-        
-        try:
-            item_id = int(input("  Ingrese el ID del cliente a editar: "))
-        except ValueError:
-            
-            self.limpiarPantalla()
-            print("El ID del cliente a editar debe ser un número")
-            print("Intentelo otra vez")
-            self.editarCustomer()
-
-        cliente = self.customDb.buscarRegistrosPorId(item_id)
-        if cliente:
-            print("  Deje en blanco si no desea modificar el campo.")
-            nombre = input(f"  Nombre actual ({cliente['nombre']}): ").capitalize() or cliente['nombre']
-            documento = input(f"  Documento actual ({cliente['documento']}): ").strip() or cliente['documento']
-            apellido = input(f"  Apellido actual ({cliente['apellido']}): ").capitalize() or cliente['apellido']
-            direccion = input(f"  Direccion actual ({cliente['direccion']}): ") or cliente['direccion']
-            celular = input(f"  Telefono actual ({cliente['celular']}): ").strip() or cliente['celular']
-            email = input(f"  Correo electronico actual ({cliente['email']}): ").strip().lower() or cliente['email']
-
-            actualizarCustomer = Clientes(item_id, nombre, documento, apellido, direccion, celular, email)
-            self.customDb.actualizarRegistro(item_id, actualizarCustomer.a_dict())
-            print("  Cliente actualizado exitosamente.")
-        else:
-            print("  Cliente no encontrado.")
-            self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes")
-
-
-
-    def eliminarCustomer(self):
-        try:
-
-            item_id = int(input("Ingrese el ID del cliente a eliminar: "))
-            self.customDb.eliminarRegistro(item_id)
-            print("  Cliente eliminado exitosamente.")
-        except ValueError:
-            self.limpiarPantalla()
-            print("El ID del cliente debe ser un número")
-            print("Intentelo otra vez")
-            self.eliminarCustomer()
-
-        self.volverAtrasYSalir(self.administrarClientes, "el SubMenú de Clientes")
-
-
-#    def listaCustomers(self):
-#        customers = self.customDb.obtenerTodosLosRegistros()
-#        for customer in customers:
-#            print(customer)
-
-    def administrarTransacciones(self):
+        self.volverAtrasYSalir(self.gestionarClientes, "el SubMenú de Clientes")
+#################################
+#################################
+    def gestionarTransacciones(self):
         choice = input("""
 ╔ =========== MENU ============ ╗
 ║  1. Crear Transacción         ║
@@ -433,9 +413,10 @@ class InterfazConcesionario:
                 self.mainMenu()
             case default:
                 print("  Opción invalida, por favor intente nuevamente.")
-                self.administrarTransacciones()
-
-    def crearTransaccion(self):
+                self.gestionarTransacciones()
+#################################
+#################################
+    def crearTransaccion(self):##
 
         try:
             id_vehiculo = int(input("  Ingrese el ID del vehículo: "))
@@ -454,14 +435,10 @@ class InterfazConcesionario:
         nuevoTransaccion = Transaccion(item_id, id_vehiculo, id_cliente, tipo_transaccion, fecha, monto, observaciones)
         self.transaccionesDb.agregarRegistro(nuevoTransaccion.a_dict())
         print("  Transacción registrada exitosamente.")
-        self.volverAtrasYSalir(self.administrarTransacciones, "el SubMenú de Transacciones")
-
-    #def listarTransacciones(self):
-     #   transacciones = self.transaccionesDb.obtenerTodosLosRegistros()
-      #  for transaccion in transacciones:
-       #     print(transaccion)
-
-    def listarTransacciones(self):
+        self.volverAtrasYSalir(self.gestionarTransacciones, "el SubMenú de Transacciones")
+#################################
+#################################
+    def listarTodasLasTransacciones(self):
         # Mostrar todas las transacciones en formato de tabla
         transacciones = self.transaccionesDb.obtenerTodosLosRegistros()
         print(transacciones)
@@ -481,9 +458,11 @@ class InterfazConcesionario:
             print(table)
         else:
             print("No hay transacciones registradas.")
-        self.volverAtrasYSalir(self.administrarTransacciones, "el SubMenú de Transacciones")
-
-
-if __name__ == "__main__":
+        self.volverAtrasYSalir(self.gestionarTransacciones, "el SubMenú de Transacciones")
+#################################
+#################################
+if __name__ == "__main__":     ##
     interface = InterfazConcesionario()
-    interface.mainMenu()
+    interface.mainMenu()       ##
+#################################
+#################################
