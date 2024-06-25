@@ -26,7 +26,14 @@ class InterfazConcesionario:
 
     def volverAtrasYSalir(self, subMenu, texto):
         while True:
-            opcion = input(f"  Ingrese 1 para volver a {texto}\n  Ingrese 2 para ir al Menú Principal\n  Enter para salir\n  Ingrese una opción: ").strip().lower()
+            opcion = input(f"""
+╔ ========================== MENU ========================== ╗              
+║   Ingrese 1 para volver a {texto}      ║
+║   Ingrese 2 para ir al Menú Principal                      ║
+║   Enter para salir                                         ║
+╚ ========================================================== ╝
+    Ingrese una opción: """ 
+              ).strip().lower()
             if opcion == "1":
                 subMenu()
                 break
@@ -71,14 +78,14 @@ class InterfazConcesionario:
 #################################
     def gestionarVehiculos(self):
         opcion = input("""
-╔ ============ MENU =========== ╗
-║  1. Crear Vehículo            ║
-║  2. Editar Vehículo           ║
-║  3. Eliminar Vehículo         ║
-║  4. Listar Vehículos          ║
-║  5. Buscar Vehículos          ║
-║  6. Volver al menu principal  ║
-╚ ============================= ╝
+╔ ========================== MENU ========================== ╗
+║  1. Crear Vehículo                                         ║
+║  2. Editar Vehículo                                        ║
+║  3. Eliminar Vehículo                                      ║
+║  4. Listar Vehículos                                       ║
+║  5. Buscar Vehículos                                       ║
+║  6. Volver al Menú Principal                               ║
+╚ ========================================================== ╝
   Seleccione una opción: """
                         )
         match opcion:
@@ -363,7 +370,7 @@ class InterfazConcesionario:
             "Celular": max(len(cliente.get('celular', 'N/A')) for cliente in clientes),
             "Email": max(len(cliente.get('email', 'N/A')) for cliente in clientes),
             }
-            print("╔=============================================================================================================╗")
+            print("╔ ============================================================================================================= ╗")
             # Imprime los encabezados de las columnas
             print("║ {:<{id_width}}║ {:<{nombre_width}}║ {:<{doc_width}}║ {:<{apellido_width}}║ {:<{direccion_width}}║ {:<{celular_width}}║ {:<{email_width}}    ║".format(
             "ID", "Nombre", "Documento", "Apellido", "Direccion", "Celular", "Email",
@@ -389,7 +396,7 @@ class InterfazConcesionario:
                     direccion_width=max_lengths["Direccion"] + 2, celular_width=max_lengths["Celular"] + 2,
                     email_width=max_lengths["Email"]
                 ))
-                print("╚=============================================================================================================╝")
+                print("╚ ============================================================================================================= ╝")
         else:    
             print("  No hay clientes registrados.")
         self.volverAtrasYSalir(self.gestionarClientes, "el SubMenú de Clientes")
@@ -397,11 +404,11 @@ class InterfazConcesionario:
 #################################
     def gestionarTransacciones(self):
         choice = input("""
-╔ =========== MENU ============ ╗
-║  1. Crear Transacción         ║
-║  2. Listar Transacciones      ║
-║  3. Volver al Menu Principal  ║
-╚ ============================= ╝  
+╔ ========================== MENU ========================== ╗
+║  1. Crear Transacción                                      ║
+║  2. Listar Transacciones                                   ║
+║  3. Volver al Menú Principal                               ║
+╚ ========================================================== ╝ 
    Seleccione una opcion: """
                   )
         match choice:
