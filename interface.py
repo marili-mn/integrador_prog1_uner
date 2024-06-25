@@ -24,16 +24,41 @@ class InterfazConcesionario:
         elif os.name == 'posix':
             os.system('clear')  #Comando para Mac/Linux
 
+    def tablas(self, registros:list, cabecera:list):
+        if (registros):
+            for elemento in cabecera:
+                table = PrettyTable()    
+            table.field_names = ["  " +"{:<28}".format(elemento)]
+            
+            for elemento in registros:
+                table.add_row(["{:<28}".format(elemento)])
+            print(table)
+        else:
+            print(mensaje_texto)
+
+    def tablas_diccionario(self, lista_items, lista_encabezados:list, dic_json:list):
+        if (dic_json):
+            for elemento in lista_encabezados:
+                table = PrettyTable()    
+            table.field_names = ["  " +"{:<28}".format(elemento)]
+            
+            for item_id in lista_items:
+                for elemento in dic_json:
+                    table.add_row[(elemento.get(item_id))]
+            print(table)
+        else:
+            print(mensaje_texto)
+
+
+
     def volverAtrasYSalir(self, subMenu, texto):
+        print("╔ ========================== MENU ========================== ╗")
+        print("║   Ingrese 1 para volver a " + "{:33}".format(texto) +     "║")        
+        print("║   Ingrese 2 para ir al Menú Principal                      ║")
+        print("║   Enter para salir                                         ║")
+        print("╚ ========================================================== ╝")
         while True:
-            opcion = input(f"""
-╔ ========================== MENU ========================== ╗              
-║   Ingrese 1 para volver a {texto}      ║
-║   Ingrese 2 para ir al Menú Principal                      ║
-║   Enter para salir                                         ║
-╚ ========================================================== ╝
-    Ingrese una opción: """ 
-              ).strip().lower()
+            opcion = input("Ingrese una opción:" ).strip().lower()
             if opcion == "1":
                 subMenu()
                 break
@@ -49,15 +74,8 @@ class InterfazConcesionario:
     def mainMenu(self):        ##
         choice = ""
         self.limpiarPantalla()
-        choice = input("""
-╔ =========== MENU =========== ╗
-║  1. Gestionar Vehículos      ║
-║  2. Gestionar Clientes       ║
-║  3. Gestionar Transacciones  ║
-║  4. Salir                    ║ 
-╚ ============================ ╝
-   Seleccione una opcion: """  ##
-                        )
+        self.tablas(['1. Vehículos', '2. Clientes', '3. Transacciones', '4. Salir'] ,['  MENU'])
+        choice = input()
         match choice:
             case '1':
                 self.limpiarPantalla()
@@ -72,22 +90,22 @@ class InterfazConcesionario:
                 self.limpiarPantalla()
                 sys.exit()
             case default:
-                print("  Opción invalida, por favor inténtelo nuevamente.")
                 self.mainMenu()
 #################################
 #################################
     def gestionarVehiculos(self):
-        opcion = input("""
-╔ ========================== MENU ========================== ╗
-║  1. Crear Vehículo                                         ║
-║  2. Editar Vehículo                                        ║
-║  3. Eliminar Vehículo                                      ║
-║  4. Listar Vehículos                                       ║
-║  5. Buscar Vehículos                                       ║
-║  6. Volver al Menú Principal                               ║
-╚ ========================================================== ╝
-  Seleccione una opción: """
-                        )
+#╔ ========================== MENU ========================== ╗
+#║  1. Crear Vehículo                                         ║
+#║  2. Editar Vehículo                                        ║
+#║  3. Eliminar Vehículo                                      ║
+#║  4. Listar Vehículos                                       ║
+#║  5. Buscar Vehículos                                       ║
+#║  6. Volver al Menú Principal                               ║
+#╚ ========================================================== ╝
+#  Seleccione una opción: """
+                        #)
+        self.tablas(['1. Crear Vehículos', '2. Editar Vehículos', '3. Eliminar Vehículo', '4. Listar Vehículo', '5. Buscar Vehículo','6. Volver al Menú Principal'] ,['  MENU VEHICULOS'])
+        opcion = input("")
         match opcion:
             case '1':
                 self.limpiarPantalla()
@@ -108,7 +126,6 @@ class InterfazConcesionario:
                 self.limpiarPantalla()
                 self.mainMenu()
             case default:
-                print("  Opción invalida, por favor intente nuevamente.")
                 self.gestionarVehiculos()
 #################################
 #################################
@@ -242,32 +259,33 @@ class InterfazConcesionario:
             self.limpiarPantalla()
             self.buscadorVehiculos()
         #if resultados:
-        if resultados is not None:
-            for resultado in resultados:
-                    print("╔ ============================================================================================================================================== ╗")
-                    print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}║ {:<12}        ║".format(
-                        "ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta", "Estado"
-                    ))
-                    print("=" * 146)
-                        #Imprimir cada vehiculo en formato de tabla
-                    print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}║ {:<12}        ║".format(
-                            resultado.get('item_id' , 'N/A'),
-                            resultado.get('patente' , 'N/A'),
-                            resultado.get('marca' , 'N/A'),
-                            resultado.get('modelo' , 'N/A'),
-                            resultado.get('tipo_vehiculo' , 'N/A'),
-                            resultado.get('anio' , 'N/A'),
-                            resultado.get('kilometraje' , 'N/A'),
-                            resultado.get('precio_compra' , 'N/A'),
-                            resultado.get('precio_venta' , 'N/A'),
-                            resultado.get('estado' , 'N/A')
-                        ))
-                    print("╚ ============================================================================================================================================== ╝")
-        else:
-            print("  No se encontraron resultados para su búsqueda.")
-        input("  Presione Cualquier tecla para continuar...")
-        self.limpiarPantalla()           
-        self.volverAtrasYSalir(self.buscadorVehiculos(), "Menú Principal")
+        lista_encabezados= ["ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta", "Estado"]
+        lista_items = ['item_id', 'patente','marca','modelo', 'tipo_vehiculo', 'anio','kiliometraje', 'precio_compra', 'precio_venta', 'estado']
+        self.tablas_diccionario(lista_items, lista_encabezados, resultados)
+        #if resultados is not None:
+        #    for resultado in resultados:
+        #            print("╔ ============================================================================================================================================== ╗")
+        #            print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}║ {:<12}        ║".format(
+        #                "ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta", "Estado"
+        #            ))
+        #            print("=" * 146)
+        #                #Imprimir cada vehiculo en formato de tabla
+        #            print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}║ {:<12}        ║".format(
+        #                    resultado.get('item_id' , 'N/A'),
+        #                    resultado.get('patente' , 'N/A'),
+        #                    resultado.get('marca' , 'N/A'),
+        #                    resultado.get('modelo' , 'N/A'),
+        #                    resultado.get('tipo_vehiculo' , 'N/A'),
+        #                    resultado.get('anio' , 'N/A'),
+        #                    resultado.get('kilometraje' , 'N/A'),
+        #                    resultado.get('precio_compra' , 'N/A'),
+        #                    resultado.get('precio_venta' , 'N/A'),
+        #                    resultado.get('estado' , 'N/A')
+        #                ))
+        #            print("╚ ============================================================================================================================================== ╝")
+        #else:
+        #    print("  No se encontraron resultados para su búsqueda.")
+
 #################################
 #################################
     def gestionarClientes(self):#
@@ -415,7 +433,7 @@ class InterfazConcesionario:
             case '1':
                 self.crearTransaccion()
             case '2':
-                self.listarTransacciones()
+                self.listarTodasLasTransacciones()
             case '3':
                 self.mainMenu()
             case default:
@@ -448,7 +466,6 @@ class InterfazConcesionario:
     def listarTodasLasTransacciones(self):
         # Mostrar todas las transacciones en formato de tabla
         transacciones = self.transaccionesDb.obtenerTodosLosRegistros()
-        print(transacciones)
         if transacciones:
             table = PrettyTable()
             table.field_names = ["ID Transacción", "ID Vehículo", "ID Cliente", "Transacción", "Fecha", "Monto", "Observaciones"]
@@ -465,7 +482,7 @@ class InterfazConcesionario:
             print(table)
         else:
             print("No hay transacciones registradas.")
-        self.volverAtrasYSalir(self.gestionarTransacciones, "el SubMenú de Transacciones")
+        #self.volverAtrasYSalir(self.gestionarTransacciones, "el SubMenú de Transacciones")
 #################################
 #################################
 if __name__ == "__main__":     ##

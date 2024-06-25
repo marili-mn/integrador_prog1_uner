@@ -25,8 +25,13 @@ class InterfazConcesionario:
             os.system('clear')  #Comando para Mac/Linux
 
     def volverAtrasYSalir(self, subMenu, texto):
+        print("╔ ========================== MENU ========================== ╗")
+        print("║   Ingrese 1 para volver a " + "{:33}".format(texto) +     "║")        
+        print("║   Ingrese 2 para ir al Menú Principal                      ║")
+        print("║   Enter para salir                                         ║")
+        print("╚ ========================================================== ╝")
         while True:
-            opcion = input(f"  Ingrese 1 para volver a {texto}\n  Ingrese 2 para ir al Menú Principal\n  Enter para salir\n  Ingrese una opción: ").strip().lower()
+            opcion = input("Ingrese una opción:" ).strip().lower()
             if opcion == "1":
                 subMenu()
                 break
@@ -71,14 +76,14 @@ class InterfazConcesionario:
 #################################
     def gestionarVehiculos(self):
         opcion = input("""
-╔ ============ MENU =========== ╗
-║  1. Crear Vehículo            ║
-║  2. Editar Vehículo           ║
-║  3. Eliminar Vehículo         ║
-║  4. Listar Vehículos          ║
-║  5. Buscar Vehículos          ║
-║  6. Volver al menu principal  ║
-╚ ============================= ╝
+╔ ========================== MENU ========================== ╗
+║  1. Crear Vehículo                                         ║
+║  2. Editar Vehículo                                        ║
+║  3. Eliminar Vehículo                                      ║
+║  4. Listar Vehículos                                       ║
+║  5. Buscar Vehículos                                       ║
+║  6. Volver al Menú Principal                               ║
+╚ ========================================================== ╝
   Seleccione una opción: """
                         )
         match opcion:
@@ -96,7 +101,7 @@ class InterfazConcesionario:
                 self.listarVehiculos()
             case '5':
                 self.limpiarPantalla()
-                self.buscador()
+                self.buscadorVehiculos()
             case '6':
                 self.limpiarPantalla()
                 self.mainMenu()
@@ -208,7 +213,7 @@ class InterfazConcesionario:
         self.volverAtrasYSalir(self.gestionarVehiculos, "el SubMenú de Vehículos")
 #################################
 #################################
-    def buscador (self):       ##
+    def buscadorVehiculos (self):       ##
         parametros = ["patente", "marca", "modelo", "precio_compra", "precio_venta", "estado"]
         contador =len(parametros)
         entrada = ""    #input
@@ -233,7 +238,7 @@ class InterfazConcesionario:
             print("  Opción inválida, por favor inténtelo nuevamente.")
             input("  Presione Cualquier tecla para continuar...")
             self.limpiarPantalla()
-            self.buscador()
+            self.buscadorVehiculos()
         #if resultados:
         if resultados is not None:
             for resultado in resultados:
@@ -260,7 +265,7 @@ class InterfazConcesionario:
             print("  No se encontraron resultados para su búsqueda.")
         input("  Presione Cualquier tecla para continuar...")
         self.limpiarPantalla()           
-        self.volverAtrasYSalir(self.buscador(), "Menú Principal")
+        self.volverAtrasYSalir(self.buscadorVehiculos(), "Menú Principal")
 #################################
 #################################
     def gestionarClientes(self):#
@@ -363,7 +368,7 @@ class InterfazConcesionario:
             "Celular": max(len(cliente.get('celular', 'N/A')) for cliente in clientes),
             "Email": max(len(cliente.get('email', 'N/A')) for cliente in clientes),
             }
-            print("╔=============================================================================================================╗")
+            print("╔ ============================================================================================================= ╗")
             # Imprime los encabezados de las columnas
             print("║ {:<{id_width}}║ {:<{nombre_width}}║ {:<{doc_width}}║ {:<{apellido_width}}║ {:<{direccion_width}}║ {:<{celular_width}}║ {:<{email_width}}    ║".format(
             "ID", "Nombre", "Documento", "Apellido", "Direccion", "Celular", "Email",
@@ -389,7 +394,7 @@ class InterfazConcesionario:
                     direccion_width=max_lengths["Direccion"] + 2, celular_width=max_lengths["Celular"] + 2,
                     email_width=max_lengths["Email"]
                 ))
-                print("╚=============================================================================================================╝")
+                print("╚ ============================================================================================================= ╝")
         else:    
             print("  No hay clientes registrados.")
         self.volverAtrasYSalir(self.gestionarClientes, "el SubMenú de Clientes")
@@ -397,18 +402,18 @@ class InterfazConcesionario:
 #################################
     def gestionarTransacciones(self):
         choice = input("""
-╔ =========== MENU ============ ╗
-║  1. Crear Transacción         ║
-║  2. Listar Transacciones      ║
-║  3. Volver al Menu Principal  ║
-╚ ============================= ╝  
+╔ ========================== MENU ========================== ╗
+║  1. Crear Transacción                                      ║
+║  2. Listar Transacciones                                   ║
+║  3. Volver al Menú Principal                               ║
+╚ ========================================================== ╝ 
    Seleccione una opcion: """
                   )
         match choice:
             case '1':
                 self.crearTransaccion()
             case '2':
-                self.listarTransacciones()
+                self.listarTodasLasTransacciones()
             case '3':
                 self.mainMenu()
             case default:
@@ -441,7 +446,6 @@ class InterfazConcesionario:
     def listarTodasLasTransacciones(self):
         # Mostrar todas las transacciones en formato de tabla
         transacciones = self.transaccionesDb.obtenerTodosLosRegistros()
-        print(transacciones)
         if transacciones:
             table = PrettyTable()
             table.field_names = ["ID Transacción", "ID Vehículo", "ID Cliente", "Transacción", "Fecha", "Monto", "Observaciones"]
