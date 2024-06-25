@@ -219,12 +219,16 @@ class InterfazConcesionario:
         parametros = ["patente", "marca", "modelo", "precio_compra", "precio_venta", "estado"]
         contador =len(parametros)
         entrada = ""    #input
+        #print(" =============== MENU ============ ")
         resultados = None
+        print(" =============== MENU ============ ")
         for i in range(contador):
-            a = ("\n " + "  " + str(i+1)+ ". " + "{:27}".format((str(parametros[i]).capitalize())) + "!")
+            a = ("\n " + "  " + str(i+1)+ ". " + "{:27}".format((str(parametros[i]).capitalize())) + "║")
+           # a = ("\n " + " ║  " + str(i+1)+ ". " + "{:27}".format((str(parametros[i]).capitalize())) + "║")
             entrada += a       
         #####
-        opcion = input(entrada + "\n   " + str(len(parametros)+1) + ". Volver al menu principal   !" + "\n" + "    Seleccione una opción:    ")
+        opcion = input(entrada + "" + "\n   " + str(len(parametros)+1) + ". Volver al menu principal   ║" + "\n" + "    Seleccione una opción:       ║")
+       # opcion = input(" ║" + "{:28}".format(" ") + "║" + "\n"+ "║" + entrada + "\n║   " + str(len(parametros)+1) + ". Volver al menu principal    ║" + "\n" + "    Seleccione una opción:    ")
         if opcion.isdigit():
             caso = int(opcion)-1
             if caso < len(parametros):
@@ -237,6 +241,7 @@ class InterfazConcesionario:
             elif caso == len(parametros):
                 self.mainMenu()
         else:
+            print(" ================================= ")
             print("  Opción inválida, por favor inténtelo nuevamente.")
             input("  Presione Cualquier tecla para continuar...")
             self.limpiarPantalla()
@@ -415,7 +420,7 @@ class InterfazConcesionario:
             case '1':
                 self.crearTransaccion()
             case '2':
-                self.listarTransacciones()
+                self.listarTodasLasTransacciones()
             case '3':
                 self.mainMenu()
             case default:
@@ -448,7 +453,6 @@ class InterfazConcesionario:
     def listarTodasLasTransacciones(self):
         # Mostrar todas las transacciones en formato de tabla
         transacciones = self.transaccionesDb.obtenerTodosLosRegistros()
-        print(transacciones)
         if transacciones:
             table = PrettyTable()
             table.field_names = ["ID Transacción", "ID Vehículo", "ID Cliente", "Transacción", "Fecha", "Monto", "Observaciones"]
