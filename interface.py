@@ -61,9 +61,11 @@ class InterfazConcesionario:
         while True:
             opcion = input("Ingrese una opción:" ).strip().lower()
             if opcion == "1":
+                self.limpiarPantalla()
                 subMenu()
                 break
             elif opcion == "2":
+                self.limpiarPantalla()
                 self.mainMenu()
                 break
             elif opcion == "3":
@@ -233,7 +235,7 @@ class InterfazConcesionario:
 #################################
 #################################
     def gestionarClientes(self):#
-        menu = ["1. Crear Cliente", "2. Editar Cliente", "3. Eliminar Cliente", "4. Listar Clientes", "5. Volver al Menu Principal"]
+        menu = ["1. Crear Cliente", "2. Editar Cliente", "3. Eliminar Cliente", "4. Listar Clientes", "5. Buscar Clientes", "6. Volver al Menu Principal"]
         self.tablas("{:38}",menu, ['MENU DE CLIENTES'])
         choice = input("")      #
         match choice:
@@ -250,6 +252,9 @@ class InterfazConcesionario:
                 self.limpiarPantalla()
                 self.listarClientes()
             case '5':
+                self.limpiarPantalla()
+                self.buscadorClientes()
+            case '6':
                 self.limpiarPantalla()
                 self.mainMenu()
             case default:
@@ -320,6 +325,34 @@ class InterfazConcesionario:
         clientes = self.clientesDb.obtenerTodosLosRegistros()
         cabecera = ["ID", "Nombre", "Documento", "Apellido", "Direccion", "Celular", "Email"]
         self.tablas_diccionario(cabecera, clientes,"Documento", self.gestionarClientes, "el SubMenú de Clientes")
+#################################
+#################################
+    def buscadorClientes (self):       ##
+        parametros = ["documento", "apellido", "nombre"]
+        menu = ["1. Documento", "2. Apellido", "3. Nombre"]
+        contador =len(parametros)
+        self.tablas("{:28}", menu, ["Buscador de clientes"])
+        opcion = input("  Opcíon:")
+        if opcion.isdigit():
+            caso = int(opcion)-1
+            if caso < len(parametros):
+                    buscar = input("  Ingrese " + parametros[caso]+ ": ")
+                    if caso == -1:
+                        caso=0
+                    resultados= self.clientesDb.buscarRegistrosPorParametro(buscar, parametros[caso])
+                    print(resultados)
+                    if resultados ==[]:
+                        print("  No se encontró ningún Clientes con esos datos.")
+            elif caso == len(parametros):
+                self.mainMenu()
+        else:
+            print("  Opción inválida, por favor inténtelo nuevamente.")
+            input("  Presione Cualquier tecla para continuar...")
+            self.limpiarPantalla()
+            self.buscadorClientes()
+        self.limpiarPantalla()
+        cabecera = ["ID", "Nombre", "Apellido","Documento", "Dirección", "Celular", "Email"]
+        self.tablas_diccionario (cabecera, resultados,"ID", self.gestionarClientes, "el SubMenú de clientes")
 #################################
 #################################
     def gestionarTransacciones(self):
