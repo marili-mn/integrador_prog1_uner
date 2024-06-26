@@ -24,39 +24,37 @@ class InterfazConcesionario:
         elif os.name == 'posix':
             os.system('clear')  #Comando para Mac/Linux
 
-    def tablas(self, registros:list, cabecera:list):
+    def tablas(self, ancho, registros:list, cabecera:list):
+        #ancho se define como: "{:<38}" donde 38 es el ancho de la columna
         if (registros):
             for elemento in cabecera:
                 table = PrettyTable()    
-            table.field_names = ["  " +"{:<28}".format(elemento)]
+            table.field_names = ["  " +ancho.format(elemento)]
             
             for elemento in registros:
-                table.add_row(["{:<28}".format(elemento)])
+                table.add_row([ancho.format(elemento)])
             print(table)
-        else:
-            print(mensaje_texto)
 
-    def tablas_diccionario(self, lista_items, lista_encabezados:list, dic_json:list):
-        if (dic_json):
-            for elemento in lista_encabezados:
-                table = PrettyTable()    
-            table.field_names = ["  " +"{:<28}".format(elemento)]
+    def tablas_diccionario (self, lista_cabecera:list, lista_diccionarios:list, subMenu, texto):
+        #ancho se define como: "{:<38}" donde 38 es el ancho de la columna
+        if (lista_diccionarios):
+            a=[]
+            table = PrettyTable()    
+            table.field_names = lista_cabecera
             
-            for item_id in lista_items:
-                for elemento in dic_json:
-                    table.add_row[(elemento.get(item_id))]
+            for diccionario in lista_diccionarios:
+                table.add_row(list(diccionario.values()))
+            table.align = "l"
+            table.sortby = "Estado"
             print(table)
-        else:
-            print(mensaje_texto)
-
-
+        input("  Presione Cualquier tecla para continuar...")
+        self.limpiarPantalla()
+        self.volverAtrasYSalir(subMenu, texto)        
 
     def volverAtrasYSalir(self, subMenu, texto):
-        print("╔ ========================== MENU ========================== ╗")
-        print("║   Ingrese 1 para volver a " + "{:33}".format(texto) +     "║")        
-        print("║   Ingrese 2 para ir al Menú Principal                      ║")
-        print("║   Enter para salir                                         ║")
-        print("╚ ========================================================== ╝")
+        string = "1. Volver a " + texto
+        menu = [string, '2. Ir al Menú Principal', '3. Salir']
+        self.tablas( "{:<38}", menu ,['MENU'])
         while True:
             opcion = input("Ingrese una opción:" ).strip().lower()
             if opcion == "1":
@@ -65,7 +63,7 @@ class InterfazConcesionario:
             elif opcion == "2":
                 self.mainMenu()
                 break
-            elif opcion == "":
+            elif opcion == "3":
                 sys.exit()
             else:
                 print("  Opción inválida, por favor inténtelo nuevamente.")
@@ -74,7 +72,8 @@ class InterfazConcesionario:
     def mainMenu(self):        ##
         choice = ""
         self.limpiarPantalla()
-        self.tablas(['1. Vehículos', '2. Clientes', '3. Transacciones', '4. Salir'] ,['  MENU'])
+        menu = ['1. Vehículos', '2. Clientes', '3. Transacciones', '4. Salir']
+        self.tablas("{:<28}", menu ,['  MENU PRINCIPAL'])
         choice = input()
         match choice:
             case '1':
@@ -94,17 +93,8 @@ class InterfazConcesionario:
 #################################
 #################################
     def gestionarVehiculos(self):
-#╔ ========================== MENU ========================== ╗
-#║  1. Crear Vehículo                                         ║
-#║  2. Editar Vehículo                                        ║
-#║  3. Eliminar Vehículo                                      ║
-#║  4. Listar Vehículos                                       ║
-#║  5. Buscar Vehículos                                       ║
-#║  6. Volver al Menú Principal                               ║
-#╚ ========================================================== ╝
-#  Seleccione una opción: """
-                        #)
-        self.tablas(['1. Crear Vehículos', '2. Editar Vehículos', '3. Eliminar Vehículo', '4. Listar Vehículo', '5. Buscar Vehículo','6. Volver al Menú Principal'] ,['  MENU VEHICULOS'])
+        menu = ['1. Crear Vehículos', '2. Editar Vehículos', '3. Eliminar Vehículo', '4. Listar Vehículo', '5. Buscar Vehículo','6. Volver al Menú Principal']
+        self.tablas("{:<28}",menu,['  MENU DE VEHICULOS'])
         opcion = input("")
         match opcion:
             case '1':
@@ -130,7 +120,6 @@ class InterfazConcesionario:
 #################################
 #################################
     def crearVehiculo(self):   ##
-
         # Solicitar datos y crear el vehiculo
         try:
 
@@ -206,42 +195,18 @@ class InterfazConcesionario:
     def listarVehiculos(self): ##
         # Mostrar todos los vehiculos
         vehiculos = self.vehiculosDb.obtenerTodosLosRegistros()
-        if vehiculos:
-            print("╔ ============================================================================================================================ ╗")
-            # Imprimir encabezados de la tabla
-            print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}    ║".format(
-                "ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta"
-            ))
-            print("=" * 128)
-            #Imprimir cada vehiculo en formato de tabla
-            for vehiculo in vehiculos:
-                print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}    ║".format(
-                    vehiculo.get('item_id', 'N/A'),
-                    vehiculo.get('patente', 'N/A'),
-                    vehiculo.get('marca', 'N/A'),
-                    vehiculo.get('modelo', 'N/A'),
-                    vehiculo.get('tipo_vehiculo', 'N/A'),
-                    vehiculo.get('anio', 'N/A'),
-                    vehiculo.get('kilometraje', 'N/A'),
-                    vehiculo.get('precio_compra', 'N/A'),
-                    vehiculo.get('precio_venta', 'N/A')
-                ))
-            print("╚ ============================================================================================================================ ╝")
-        else:
-            print("No hay vehículos registrados.")
-        self.volverAtrasYSalir(self.gestionarVehiculos, "el SubMenú de Vehículos")
+        cabecera = ["ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta", "Estado"]
+        self.tablas_diccionario (cabecera, vehiculos, self.gestionarVehiculos, "el SubMenú de vehículos")
 #################################
 #################################
     def buscadorVehiculos (self):       ##
         parametros = ["patente", "marca", "modelo", "precio_compra", "precio_venta", "estado"]
+        menu = ["1. Patente", "2. marca", "3. Modelo", "4 .Precio_compra", "5. Precio_venta", "6. Estado"]
         contador =len(parametros)
         entrada = ""    #input
         resultados = None
-        for i in range(contador):
-            a = ("\n " + "  " + str(i+1)+ ". " + "{:27}".format((str(parametros[i]).capitalize())) + "!")
-            entrada += a       
-        #####
-        opcion = input(entrada + "\n   " + str(len(parametros)+1) + ". Volver al menu principal   !" + "\n" + "    Seleccione una opción:    ")
+        self.tablas("{:28}", menu, ["Buscador de vehículos"])
+        opcion = input("  Opcíon:")
         if opcion.isdigit():
             caso = int(opcion)-1
             if caso < len(parametros):
@@ -258,47 +223,16 @@ class InterfazConcesionario:
             input("  Presione Cualquier tecla para continuar...")
             self.limpiarPantalla()
             self.buscadorVehiculos()
+        self.limpiarPantalla()
         #if resultados:
-        lista_encabezados= ["ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta", "Estado"]
-        lista_items = ['item_id', 'patente','marca','modelo', 'tipo_vehiculo', 'anio','kiliometraje', 'precio_compra', 'precio_venta', 'estado']
-        self.tablas_diccionario(lista_items, lista_encabezados, resultados)
-        #if resultados is not None:
-        #    for resultado in resultados:
-        #            print("╔ ============================================================================================================================================== ╗")
-        #            print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}║ {:<12}        ║".format(
-        #                "ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta", "Estado"
-        #            ))
-        #            print("=" * 146)
-        #                #Imprimir cada vehiculo en formato de tabla
-        #            print("║ {:<5}║ {:<10}║ {:<15}║ {:<16}║ {:<15}║ {:<5}║ {:<12}║ {:<15}║ {:<12}║ {:<12}        ║".format(
-        #                    resultado.get('item_id' , 'N/A'),
-        #                    resultado.get('patente' , 'N/A'),
-        #                    resultado.get('marca' , 'N/A'),
-        #                    resultado.get('modelo' , 'N/A'),
-        #                    resultado.get('tipo_vehiculo' , 'N/A'),
-        #                    resultado.get('anio' , 'N/A'),
-        #                    resultado.get('kilometraje' , 'N/A'),
-        #                    resultado.get('precio_compra' , 'N/A'),
-        #                    resultado.get('precio_venta' , 'N/A'),
-        #                    resultado.get('estado' , 'N/A')
-        #                ))
-        #            print("╚ ============================================================================================================================================== ╝")
-        #else:
-        #    print("  No se encontraron resultados para su búsqueda.")
-
+        cabecera = ["ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta", "Estado"]
+        self.tablas_diccionario (cabecera, resultados, self.gestionarVehiculos, "el SubMenú de vehículos")
 #################################
 #################################
     def gestionarClientes(self):#
-        choice = input("""     
-╔ ============ MENU =========== ╗
-║  1. Crear Cliente             ║
-║  2. Editar Cliente            ║
-║  3. Eliminar Cliente          ║
-║  4. Listar Clientes           ║
-║  5. Volver al Menu Principal  ║
-╚ ============================= ╝
-   Seleccione una opcion: """  ##
-                        )
+        menu = ["1. Crear Cliente", "2. Editar Cliente", "3. Eliminar Cliente", "4. Listar Clientes", "5. Volver al Menu Principal"]
+        self.tablas("{:38}",menu, ['MENU DE CLIENTES'])
+        choice = input("")      #
         match choice:
             case '1':
                 self.crearCliente()

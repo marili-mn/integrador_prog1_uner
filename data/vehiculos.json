@@ -108,15 +108,15 @@
         "estado": "vendido"
     },
     {
-        "item_id": 10,
+        "item_id": "10",
         "patente": "ACB123",
         "marca": "Ford",
         "modelo": "Espacio",
         "tipo_vehiculo": "Sedan",
-        "anio": 1992,
+        "anio": "1992",
         "kilometraje": "299999",
-        "precio_compra": 1000.0,
-        "precio_venta": 1100.0,
+        "precio_compra": "1000.0",
+        "precio_venta": "1100.0",
         "estado": "Disponible"
     }
 ]
