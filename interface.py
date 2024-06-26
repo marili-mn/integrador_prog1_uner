@@ -35,26 +35,29 @@ class InterfazConcesionario:
                 table.add_row([ancho.format(elemento)])
             print(table)
 
-    def tablas_diccionario (self, lista_cabecera:list, lista_diccionarios:list, subMenu, texto):
+    def tablas_diccionario (self, lista_cabecera:list, lista_diccionarios:list,ordenamiento, subMenu, texto):
         #ancho se define como: "{:<38}" donde 38 es el ancho de la columna
         if (lista_diccionarios):
             a=[]
             table = PrettyTable()    
             table.field_names = lista_cabecera
-            
             for diccionario in lista_diccionarios:
-                table.add_row(list(diccionario.values()))
+                lista_string = list(diccionario.values())
+                for i in range(len(lista_string)):
+                    lista_string[i] = str(lista_string[i])
+                table.add_row(lista_string)
             table.align = "l"
-            table.sortby = "Estado"
+            table.sortby = ordenamiento
             print(table)
         input("  Presione Cualquier tecla para continuar...")
         self.limpiarPantalla()
         self.volverAtrasYSalir(subMenu, texto)        
 
     def volverAtrasYSalir(self, subMenu, texto):
+        self.limpiarPantalla()
         string = "1. Volver a " + texto
         menu = [string, '2. Ir al Menú Principal', '3. Salir']
-        self.tablas( "{:<38}", menu ,['MENU'])
+        self.tablas( "{:<42}", menu ,['MENU'])
         while True:
             opcion = input("Ingrese una opción:" ).strip().lower()
             if opcion == "1":
@@ -89,6 +92,7 @@ class InterfazConcesionario:
                 self.limpiarPantalla()
                 sys.exit()
             case default:
+                self.limpiarPantalla()
                 self.mainMenu()
 #################################
 #################################
@@ -116,6 +120,7 @@ class InterfazConcesionario:
                 self.limpiarPantalla()
                 self.mainMenu()
             case default:
+                self.limpiarPantalla()
                 self.gestionarVehiculos()
 #################################
 #################################
@@ -196,15 +201,13 @@ class InterfazConcesionario:
         # Mostrar todos los vehiculos
         vehiculos = self.vehiculosDb.obtenerTodosLosRegistros()
         cabecera = ["ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta", "Estado"]
-        self.tablas_diccionario (cabecera, vehiculos, self.gestionarVehiculos, "el SubMenú de vehículos")
+        self.tablas_diccionario (cabecera, vehiculos,"Estado", self.gestionarVehiculos, "el SubMenú de vehículos")
 #################################
 #################################
     def buscadorVehiculos (self):       ##
         parametros = ["patente", "marca", "modelo", "precio_compra", "precio_venta", "estado"]
-        menu = ["1. Patente", "2. marca", "3. Modelo", "4 .Precio_compra", "5. Precio_venta", "6. Estado"]
+        menu = ["1. Patente", "2. Marca", "3. Modelo", "4 .Precio_compra", "5. Precio_venta", "6. Estado"]
         contador =len(parametros)
-        entrada = ""    #input
-        resultados = None
         self.tablas("{:28}", menu, ["Buscador de vehículos"])
         opcion = input("  Opcíon:")
         if opcion.isdigit():
@@ -226,7 +229,7 @@ class InterfazConcesionario:
         self.limpiarPantalla()
         #if resultados:
         cabecera = ["ID", "Patente", "Marca", "Modelo", "Tipo", "Año", "Kilometraje", "Precio Compra", "Precio Venta", "Estado"]
-        self.tablas_diccionario (cabecera, resultados, self.gestionarVehiculos, "el SubMenú de vehículos")
+        self.tablas_diccionario (cabecera, resultados,"Estado", self.gestionarVehiculos, "el SubMenú de vehículos")
 #################################
 #################################
     def gestionarClientes(self):#
@@ -235,17 +238,22 @@ class InterfazConcesionario:
         choice = input("")      #
         match choice:
             case '1':
+                self.limpiarPantalla()
                 self.crearCliente()
             case '2':
+                self.limpiarPantalla()
                 self.editarClientes()
             case '3':
+                self.limpiarPantalla()
                 self.eliminarClientes()
             case '4':
+                self.limpiarPantalla()
                 self.listarClientes()
             case '5':
+                self.limpiarPantalla()
                 self.mainMenu()
             case default:
-                print("  Opción invalida, por favor intente nuevamente.")
+                self.limpiarPantalla()
                 self.gestionarClientes()
 #################################
 #################################                
@@ -309,69 +317,27 @@ class InterfazConcesionario:
 #################################
 #################################
     def listarClientes(self):  ##
-        # Mostrar todos los clientes en formato de tabla
         clientes = self.clientesDb.obtenerTodosLosRegistros()
-        if clientes:
-            # Obtener la longitud maxima de los datos para cada columna
-            max_lengths = {
-            "ID": max(len(str(cliente.get('item_id', 'N/A'))) for cliente in clientes),
-            "Nombre": max(len(cliente.get('nombre', 'N/A')) for cliente in clientes),
-            "Documento": max(len(str(cliente.get('documento', 'N/A'))) for cliente in clientes),
-            "Apellido": max(len(cliente.get('apellido', 'N/A')) for cliente in clientes),
-            "Direccion": max(len(cliente.get('direccion', 'N/A')) for cliente in clientes),
-            "Celular": max(len(cliente.get('celular', 'N/A')) for cliente in clientes),
-            "Email": max(len(cliente.get('email', 'N/A')) for cliente in clientes),
-            }
-            print("╔ ============================================================================================================= ╗")
-            # Imprime los encabezados de las columnas
-            print("║ {:<{id_width}}║ {:<{nombre_width}}║ {:<{doc_width}}║ {:<{apellido_width}}║ {:<{direccion_width}}║ {:<{celular_width}}║ {:<{email_width}}    ║".format(
-            "ID", "Nombre", "Documento", "Apellido", "Direccion", "Celular", "Email",
-            id_width=max_lengths["ID"] + 2, nombre_width=max_lengths["Nombre"] + 2,
-            doc_width=max_lengths["Documento"] + 2, apellido_width=max_lengths["Apellido"] + 2,
-            direccion_width=max_lengths["Direccion"] + 2, celular_width=max_lengths["Celular"] + 2,
-            email_width=max_lengths["Email"]
-            ))
-            print("=" * (sum(max_lengths.values()) + 31))  # Línea divisoria
-
-            # Imprime los datos de los clientes
-            for cliente in clientes:
-                print("║ {:<{id_width}}║ {:<{nombre_width}}║ {:<{doc_width}}║ {:<{apellido_width}}║ {:<{direccion_width}}║ {:<{celular_width}}║ {:<{email_width}}    ║".format(
-                    cliente.get('item_id', 'N/A'),
-                    cliente.get('nombre', 'N/A'),
-                    cliente.get('documento', 'N/A'),
-                    cliente.get('apellido', 'N/A'),
-                    cliente.get('direccion', 'N/A'),
-                    cliente.get('celular', 'N/A'),
-                    cliente.get('email', 'N/A'),
-                    id_width=max_lengths["ID"] + 2, nombre_width=max_lengths["Nombre"] + 2,
-                    doc_width=max_lengths["Documento"] + 2, apellido_width=max_lengths["Apellido"] + 2,
-                    direccion_width=max_lengths["Direccion"] + 2, celular_width=max_lengths["Celular"] + 2,
-                    email_width=max_lengths["Email"]
-                ))
-                print("╚ ============================================================================================================= ╝")
-        else:    
-            print("  No hay clientes registrados.")
-        self.volverAtrasYSalir(self.gestionarClientes, "el SubMenú de Clientes")
+        cabecera = ["ID", "Nombre", "Documento", "Apellido", "Direccion", "Celular", "Email"]
+        self.tablas_diccionario(cabecera, clientes,"Documento", self.gestionarClientes, "el SubMenú de Clientes")
 #################################
 #################################
     def gestionarTransacciones(self):
-        choice = input("""
-╔ ========================== MENU ========================== ╗
-║  1. Crear Transacción                                      ║
-║  2. Listar Transacciones                                   ║
-║  3. Volver al Menú Principal                               ║
-╚ ========================================================== ╝ 
-   Seleccione una opcion: """
-                  )
+        menu = ["1. Crear Transacción", "2. Listar Transacciones", "3. Volver al Menú Principal"]
+        self.tablas("{:<28}",menu, ['MENU DE TRANSACCIONES'])
+        choice = input("")
         match choice:
             case '1':
+                self.limpiarPantalla()
                 self.crearTransaccion()
             case '2':
+                self.limpiarPantalla()
                 self.listarTodasLasTransacciones()
             case '3':
+                self.limpiarPantalla()
                 self.mainMenu()
             case default:
-                print("  Opción invalida, por favor intente nuevamente.")
+                self.limpiarPantalla()
                 self.gestionarTransacciones()
 #################################
 #################################
@@ -398,24 +364,25 @@ class InterfazConcesionario:
 #################################
 #################################
     def listarTodasLasTransacciones(self):
-        # Mostrar todas las transacciones en formato de tabla
+        cabecera = ["ID Transacción", "ID Vehículo", "ID Cliente", "Transacción", "Fecha", "Monto", "Observaciones"]
         transacciones = self.transaccionesDb.obtenerTodosLosRegistros()
-        if transacciones:
-            table = PrettyTable()
-            table.field_names = ["ID Transacción", "ID Vehículo", "ID Cliente", "Transacción", "Fecha", "Monto", "Observaciones"]
-            for transaccion in transacciones:
-                table.add_row([
-                    transaccion.get('item_id'),
-                    transaccion.get('id_vehiculo'),
-                    transaccion.get('id_cliente'),
-                    transaccion.get('tipo_transaccion'),
-                    transaccion.get('fecha'),
-                    transaccion.get('monto'),
-                    transaccion.get('observaciones')
-                ])
-            print(table)
-        else:
-            print("No hay transacciones registradas.")
+        self.tablas_diccionario (cabecera, transacciones,"Fecha", self.gestionarTransacciones, "el SubMenú de Transacciones")
+        #if transacciones:
+        #    table = PrettyTable()
+        #    table.field_names = 
+        #    for transaccion in transacciones:
+        #        table.add_row([
+        #            transaccion.get('item_id'),
+        #            transaccion.get('id_vehiculo'),
+        #            transaccion.get('id_cliente'),
+        #            transaccion.get('tipo_transaccion'),
+        #            transaccion.get('fecha'),
+        #            transaccion.get('monto'),
+        #            transaccion.get('observaciones')
+        #        ])
+        #    print(table)
+        #else:
+        #    print("No hay transacciones registradas.")
         #self.volverAtrasYSalir(self.gestionarTransacciones, "el SubMenú de Transacciones")
 #################################
 #################################

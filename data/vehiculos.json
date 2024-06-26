@@ -118,5 +118,17 @@
         "precio_compra": "1000.0",
         "precio_venta": "1100.0",
         "estado": "Disponible"
+    },
+    {
+        "item_id": 11,
+        "patente": "BBB123",
+        "marca": "Toyota",
+        "modelo": "Hibrid",
+        "tipo_vehiculo": "Suv",
+        "anio": 2024,
+        "kilometraje": "0",
+        "precio_compra": 34444.0,
+        "precio_venta": 56666.0,
+        "estado": "Vendido"
     }
 ]

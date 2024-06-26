@@ -25,5 +25,14 @@
         "direccion": "asdasd 123",
         "celular": "123456789",
         "email": "JuansitoA@gmail.com"
+    },
+    {
+        "item_id": 4,
+        "nombre": "Marcos",
+        "documento": "29.565.11",
+        "apellido": "Lastra",
+        "direccion": "Casimiro",
+        "celular": "155102723",
+        "email": "marcos_lastra@gmail.com"
     }
 ]
