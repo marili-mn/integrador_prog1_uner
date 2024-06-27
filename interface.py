@@ -1,15 +1,16 @@
 import sys
 import os
-
+from prettytable import PrettyTable
+from datetime import datetime
+#librerías de pyhton
 
 from vehiculos import Vehiculos
 from clientes import Clientes
 from transaccion import Transaccion
 from database import Database
-from prettytable import PrettyTable
+# 
 
-#pip install prettytable
-#   Importamos las clases de los json
+
 
 global resultados
 resultados = []
@@ -74,6 +75,24 @@ class InterfazConcesionario:
             else:
                 print("  Opción inválida, por favor inténtelo nuevamente.")
 #################################
+#################################
+    def validarFechas(self, fecha, funcion_volver_a_menu):
+        try:
+            fecha_ok = datetime.fromisoformat(fecha)
+            fecha = fecha_ok.strftime("%Y-%m-%d")
+        except ValueError:
+            print("Ingrese la fecha en el formato correcto (YYYY-MM-DD)")
+            input("  Presione Cualquier tecla para continuar...")
+            self.limpiarPantalla()
+            funcion_volver_a_menu()
+#################################
+#################################
+    def buscarEnMemoriaPorParametro(self,registroId, dic_operacion, parametro):
+        coleccion =[]
+        for registro in dic_operacion:
+            if registro.get(parametro) == registroId:
+                coleccion.append(registro)
+        return coleccion
 #################################
     def mainMenu(self):        ##
         choice = ""
@@ -384,7 +403,9 @@ class InterfazConcesionario:
             id_vehiculo = int(input("  Ingrese el ID del vehículo: "))
             id_cliente = int(input("  Ingrese el ID del cliente: "))
             tipo_transaccion = input("  Ingrese el tipo de transacción(compra o venta) : ").capitalize().strip()
+            ####
             fecha = input("  Ingrese la fecha de la transacción (YYYY-MM-DD): ").strip()
+            self.validarFechas(fecha, self.crearTransaccion)
             monto = float(input("  Ingrese el monto de la transacción: "))
             observaciones = input("  Ingrese las observaciones de la transacción: ").capitalize()
         except ValueError:
@@ -404,121 +425,42 @@ class InterfazConcesionario:
         cabecera = ["ID Transacción", "ID Vehículo", "ID Cliente", "Transacción", "Fecha", "Monto", "Observaciones"]
         transacciones = self.transaccionesDb.obtenerTodosLosRegistros()
         self.tablas_diccionario (cabecera, transacciones,"Fecha", self.gestionarTransacciones, "el SubMenú de Transacciones")
-        #if transacciones:
-        #    table = PrettyTable()
-        #    table.field_names = 
-        #    for transaccion in transacciones:
-        #        table.add_row([
-        #            transaccion.get('item_id'),
-        #            transaccion.get('id_vehiculo'),
-        #            transaccion.get('id_cliente'),
-        #            transaccion.get('tipo_transaccion'),
-        #            transaccion.get('fecha'),
-        #            transaccion.get('monto'),
-        #            transaccion.get('observaciones')
-        #        ])
-        #    print(table)
-        #else:
-        #    print("No hay transacciones registradas.")
-        #self.volverAtrasYSalir(self.gestionarTransacciones, "el SubMenú de Transacciones")
 #################################
 #################################
-
     def buscadorTransacciones(self):
         menu = ["1. Buscar por compras", "2. Buscar por ventas"]
-        self.tablas("{:<48}", menu, ["Menú buscador de transacciones"])
-        cabecera = ["ID Transacción", "ID Vehículo", "ID Cliente", "Transacción", "Fecha", "Monto", "Observaciones"]
-        parametro = ["tipo_transaccion", "Compra", "Venta"]
-        opcion = input("  Elija una opción: ")
-        
-        if opcion.isdigit():
-            caso = int(opcion)
-            if caso == 1:
-                buscar = parametro[1]
-                resultados = self.transaccionesDb.buscarRegistrosPorParametro(buscar, parametro[0])
-            elif caso == 2:
-                buscar = parametro[2]
-                resultados = self.transaccionesDb.buscarRegistrosPorParametro(buscar, parametro[0])
+        self.tablas("{:<48}", menu, ["Buscador de transacciones (Tipo de transacción: compra o venta)"])
+        opcion_menu = input("  Elija una opción: ")
+        sub_menu = ["1. Buscar por ID de cliente", "2. Buscar por ID de vehículo", "3. Buscar por Rango de fechas"]
+        self.tablas("{:<48}", sub_menu, ["Buscador de transacciones (ID de cliente, vehículo o rango de fechas)"])
+        opcion_sub_menu = input("  Elija una opción: ")
+        if opcion_menu in ["1", "2"]:
+            if opcion_menu == "1":
+                tipo_transaccion = self.transaccionesDb.buscarRegistrosPorParametro("Compra", "tipo_transaccion")
             else:
-                print("Opción inválida")
-                return
-        else:
-            print("Opción inválida")
-            return
-        
-        if resultados:
-          
-            self.tablas_diccionario(cabecera, resultados, "Fecha", self.gestionarTransacciones, "el SubMenú de transacciones")
-        else:
-            print("No se encontró ninguna transacción con esos parámetros.")
-            self.volverAtrasYSalir(self.gestionarTransacciones, "el SubMenú de transacciones")
-
-             
-            #if caso <= len(menu)-1:
-             #   if caso == 0:
-              #      buscar = parametro[4]
-               #     resultados= self.transaccionesDb.buscarRegistrosPorParametro(buscar, parametro[0])
-                #elif caso == 1:
-                 #   buscar = parametro[5]
-                  #  resultados= self.transaccionesDb.buscarRegistrosPorParametro(buscar, parametro[0])
-                   # print(resultados)   
-           # else:
-             #   print("  Opción inválida, por favor inténtelo nuevamente.")
-              #  input("  Presione Cualquier tecla para continuar...")
-               # self.limpiarPantalla()
-                #self.buscadorTransacciones()
-
-
-        # Resultado = busqueda compra / venta
-      # menu = ["1. Buscar por id_cliente", "2. Buscar por id_vehículo", "3. Buscar por Rango de Fecha"]
-      #  self.tablas("{:48}", menu, ["Menú buscador de transacciones"])
-      #  opcion = input("  Elija una opción: ")
-      #  if opcion.isdigit():
-      #      caso = int(opcion)-1
-      #      if caso < len(menu)-1:
-      #          buscar = input("  Ingrese su busqueda: ")
-      #          if caso == 0:
-      #              resultados= self.transaccionesDb.buscarRegistrosPorParametro(buscar, parametro[3])
-      #          elif caso == 1:
-      #              resultados= self.transaccionesDb.buscarRegistrosPorParametro(buscar, parametro[2])
-      #          elif caso == 2:
-      #              a = 0   
-      #              #Introducir rango de fecha
-      #      else:
-      #          print("  Opción inválida, por favor inténtelo nuevamente.")
-      #          input("  Presione Cualquier tecla para continuar...")
-      #          self.limpiarPantalla() '''
-
-     
-                
-    '''    parametros = ["id_vehiculo", "id_cliente", "tipo_transaccion"]
-        menu = ["1. ID Vehículo", "2. ID Cliente", "3. Tipo de Transacción"]
-        contador =len(parametros)
-        self.tablas("{:28}", menu, ["Buscador de Transacciones"])
-        opcion = input("  Opción: ")
-        if opcion.isdigit():
-            caso = int(opcion)-1
-            if caso < len(parametros):
-                    buscar = input("  Ingrese " + parametros[caso]+ ": ")
-                    if caso == -1:
-                        caso=0
-                    resultados= self.transaccionesDb.buscarRegistrosPorParametro(buscar, parametros[caso])
-                    print(resultados)
-                    if resultados ==[]:
-                        print("  No se encontró ninguna Transacción con esos datos.")
-            elif caso == len(parametros):
-                    self.mainMenu()
-        else:
-            print("  Opción inválida, por favor inténtelo nuevamente.")
-            input("  Presione Cualquier tecla para continuar...")
-            self.limpiarPantalla()
-            self.buscadorTransacciones()
-        self.limpiarPantalla()
-        cabecera = ["ID Transacción", "ID Vehículo", "ID Cliente", "Transacción", "Fecha", "Monto", "Observaciones"]
-        self.tablas_diccionario (cabecera, resultados,"ID Transacción", self.gestionarTransacciones, "el SubMenú de Transacciones")
-'''
-
-
+                tipo_transaccion = self.transaccionesDb.buscarRegistrosPorParametro("Venta", "tipo_transaccion")
+            if opcion_sub_menu in ["1", "2", "3"]:
+               cabecera = ["ID Transacción", "ID Vehículo", "ID Cliente", "Transacción", "Fecha", "Monto", "Observaciones"]
+               if opcion_sub_menu == "1":
+                   buscar = int(input("  Ingrese el ID del cliente: "))
+                   resultados = self.buscarEnMemoriaPorParametro(buscar,tipo_transaccion, "id_cliente") 
+                   cabecera = ["ID Transacción", "ID Vehículo", "ID Cliente", "Transacción", "Fecha", "Monto", "Observaciones"]
+                   self.tablas_diccionario (cabecera, resultados, "ID Cliente", self.gestionarTransacciones, "el SubMenú de Transacciones")
+               elif opcion_sub_menu == "2":
+                   buscar = int(input("  Ingrese el ID del vehículo: "))
+                   resultados = self.buscarEnMemoriaPorParametro(buscar,tipo_transaccion, "id_vehiculo")
+                   self.tablas_diccionario (cabecera, resultados, "ID Vehículo", self.gestionarTransacciones, "el SubMenú de Transacciones") 
+               elif opcion_sub_menu == "3":
+                   fecha_desde = input("  Ingrese la fecha desde (YYYY-MM-DD): ")
+                   fecha_hasta = input("  Ingrese la fecha hasta (YYYY-MM-DD): ")
+                   self.validarFechas(fecha_desde, self.buscadorTransacciones)
+                   self.validarFechas(fecha_hasta, self.buscadorTransacciones)
+                   coleccion = []
+                   for registro in tipo_transaccion:
+                        if fecha_desde <= registro.get("fecha") <= fecha_hasta:
+                           coleccion.append(registro)
+                   resultados = coleccion
+                   self.tablas_diccionario (cabecera, resultados, "Fecha", self.gestionarTransacciones, "el SubMenú de Transacciones")     
 #################################
 #################################
 if __name__ == "__main__":     ##

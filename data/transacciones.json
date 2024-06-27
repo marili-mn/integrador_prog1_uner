@@ -25,7 +25,32 @@
         "fecha": "2022-12-02",
         "monto": 2111.0,
         "observaciones": "Todo ok"
+    },
+    {
+        "item_id": 4,
+        "id_vehiculo": 7,
+        "id_cliente": 8,
+        "tipo_transaccion": "Compra",
+        "fecha": "2022-02-03",
+        "monto": 10000.0,
+        "observaciones": "Todo ok"
+    },
+    {
+        "item_id": 5,
+        "id_vehiculo": 7,
+        "id_cliente": 88,
+        "tipo_transaccion": "Venta",
+        "fecha": "2022-03-04",
+        "monto": 10000.0,
+        "observaciones": "Todo ok"
+    },
+    {
+        "item_id": 6,
+        "id_vehiculo": 99,
+        "id_cliente": 88,
+        "tipo_transaccion": "Compra",
+        "fecha": "2019-01-03",
+        "monto": 11111.0,
+        "observaciones": "Bien"
     }
 ]
-
-

@@ -52,4 +52,20 @@ class Database:
             if registro.get(parametro) == registroId:
                 coleccion.append(registro)
         return coleccion
-      
+
+    def buscarRegistrosPorRangoFechas(self, fecha_desde, fecha_hasta, parametro):
+        coleccion = []
+        for registro in self.data:
+            if fecha_desde <= registro.get(parametro) <= fecha_hasta:
+                coleccion.append(registro)
+        return coleccion
+
+####
+    def buscarEnMemoriaPorParametro(self,registroId, dic_operacion, parametro):
+        coleccion =[]
+        for registro in dic_operacion:
+            if registro.get(parametro) == registroId:
+                coleccion.append(registro)
+        return coleccion
+
+
