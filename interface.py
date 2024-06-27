@@ -2,15 +2,13 @@ import sys
 import os
 from prettytable import PrettyTable
 from datetime import datetime
-#librerías de pyhton
+#   librerías de pyhton
 
 from vehiculos import Vehiculos
 from clientes import Clientes
 from transaccion import Transaccion
 from database import Database
-# 
-
-
+#   bases de datos json    
 
 global resultados
 resultados = []
@@ -23,27 +21,36 @@ class InterfazConcesionario:
 
     def limpiarPantalla(self):
         if os.name == 'nt':
-            os.system('cls')  # Comando para Windows
+            os.system('cls')
+        # Comando para Windows  
         elif os.name == 'posix':
-            os.system('clear')  #Comando para Mac/Linux
-
-    def tablas(self, ancho, registros:list, cabecera:list):
-        #ancho se define como: "{:<38}" donde 38 es el ancho de la columna
-        if (registros):
-            for elemento in cabecera:
-                table = PrettyTable()    
-            table.field_names = ["  " +ancho.format(elemento)]
-            
-            for elemento in registros:
-                table.add_row([ancho.format(elemento)])
-            print(table)
-
+            os.system('clear')
+        #Comando para Mac/Linux  
+    
     def pausa(self):
         input("  Presione Cualquier tecla para continuar...")
         self.limpiarPantalla()
+        #f(auxiliar)
+    def opcion(self):
+        return input("  Elija una opción: ")
+        #f(auxiliar)
+
+    def tablas(self, ancho, registros:list, cabecera:list):
+        #esta tabla funciona con listas
+        #ancho define el ancho, puede llevar {:<} para ser mínimo
+        if (registros):
+            
+            for elemento in cabecera:
+                table = PrettyTable()    
+            table.field_names = ["  " +ancho.format(elemento)]
+            # esta parte añade los encabezados a la tabla con un espacio adelante
+            for elemento in registros:
+                table.add_row([ancho.format(elemento)])
+            #   esta parte añade los valores a la tabla con el mismo ancho
+            print(table)
 
     def tablas_diccionario (self, lista_cabecera:list, lista_diccionarios:list, ordenamiento, subMenu, texto):
-        #ancho se define como: "{:<38}" donde 38 es el ancho de la columna
+        #esta tabla funciona con listas de diccionarios 
         if (lista_diccionarios):
             table = PrettyTable()    
             table.field_names = lista_cabecera
@@ -52,6 +59,8 @@ class InterfazConcesionario:
                 for i in range(len(lista_string)):
                     lista_string[i] = str(lista_string[i])
                 table.add_row(lista_string)
+                # esta parte convierte los valores de los diccionarios a strings
+                # ahorra problemas con la libreria PrettyTable
             table.align = "l"
             table.sortby = ordenamiento
             print(table)
@@ -64,7 +73,8 @@ class InterfazConcesionario:
         menu = [string, '2. Ir al Menú Principal', '3. Salir']
         self.tablas( "{:<42}", menu ,['MENU'])
         while True:
-            opcion = input("Ingrese una opción:" ).strip().lower()
+        #   necesitamos el while+if, porque con match no podemos usar el break
+            opcion = self.opcion().strip().lower()
             if opcion == "1":
                 self.limpiarPantalla()
                 subMenu()
@@ -83,6 +93,7 @@ class InterfazConcesionario:
         try:
             fecha_ok = datetime.fromisoformat(fecha)
             fecha = fecha_ok.strftime("%Y-%m-%d")
+            #   valida la fecha
         except ValueError:
             print("Ingrese la fecha en el formato correcto (YYYY-MM-DD)")
             self.pausa()
@@ -90,6 +101,7 @@ class InterfazConcesionario:
 #################################
 #################################
     def buscarEnMemoriaPorParametro(self,registroId, dic_operacion, parametro):
+        #   Esta función la usamos para buscar fuera del json
         coleccion =[]
         for registro in dic_operacion:
             if registro.get(parametro) == registroId:
@@ -97,55 +109,30 @@ class InterfazConcesionario:
         return coleccion
 #################################
     def mainMenu(self):        ##
-        choice = ""
+        opcion = ""
         self.limpiarPantalla()
         menu = ['1. Vehículos', '2. Clientes', '3. Transacciones', '4. Salir']
         self.tablas("{:<28}", menu ,['  MENU PRINCIPAL'])
-        choice = input()
-        match choice:
-            case '1':
-                self.limpiarPantalla()
-                self.gestionarVehiculos()
-            case '2':
-                self.limpiarPantalla()
-                self.gestionarClientes()
-            case '3':
-                self.limpiarPantalla()
-                self.gestionarTransacciones()
-            case '4':
-                self.limpiarPantalla()
-                sys.exit()
-            case default:
-                self.limpiarPantalla()
-                self.mainMenu()
+        opcion = self.opcion()
+        opciones = { '1': self.gestionarVehiculos, '2': self.gestionarClientes, '3': self.gestionarTransacciones, '4': sys.exit}
+        if opcion in ["1","2","3","4"]:
+            self.limpiarPantalla()
+            opciones.get(opcion, self.mainMenu)()
+        else:
+            self.mainMenu()
 #################################
 #################################
     def gestionarVehiculos(self):
         menu = ['1. Crear Vehículos', '2. Editar Vehículos', '3. Eliminar Vehículo', '4. Listar Vehículo', '5. Buscar Vehículo','6. Volver al Menú Principal']
         self.tablas("{:<28}",menu,['  MENU DE VEHICULOS'])
-        opcion = input("")
-        match opcion:
-            case '1':
-                self.limpiarPantalla()
-                self.crearVehiculo()
-            case '2':
-                self.limpiarPantalla()
-                self.editarVehiculo()
-            case '3':
-                self.limpiarPantalla()
-                self.eliminarVehiculo()
-            case '4':
-                self.limpiarPantalla()
-                self.listarVehiculos()
-            case '5':
-                self.limpiarPantalla()
-                self.buscadorVehiculos()
-            case '6':
-                self.limpiarPantalla()
-                self.mainMenu()
-            case default:
-                self.limpiarPantalla()
-                self.gestionarVehiculos()
+        opcion = self.opcion()
+        opciones = { '1': self.crearVehiculo, '2': self.editarVehiculo, '3': self.eliminarVehiculo, '4': self.listarVehiculos, '5': self.buscadorVehiculos, '6': self.mainMenu}
+        if opcion in ['1', '2', '3', '4', '5', '6']:
+            self.limpiarPantalla()
+            opciones.get(opcion, self.mainMenu)()
+        else:
+            self.limpiarPantalla()
+            self.gestionarVehiculos()
 #################################
 #################################
     def crearVehiculo(self):   ##
@@ -233,7 +220,7 @@ class InterfazConcesionario:
         menu = ["1. Patente", "2. Marca", "3. Modelo", "4. Precio_compra", "5. Precio_venta", "6. Estado"]
         contador =len(parametros)
         self.tablas("{:28}", menu, ["Buscador de vehículos"])
-        opcion = input("  Opción:")
+        opcion = self.opcion()
         if opcion.isdigit():
             caso = int(opcion)-1
             if caso < len(parametros):
@@ -258,29 +245,14 @@ class InterfazConcesionario:
     def gestionarClientes(self):#
         menu = ["1. Crear Cliente", "2. Editar Cliente", "3. Eliminar Cliente", "4. Listar Clientes", "5. Buscar Clientes", "6. Volver al Menu Principal"]
         self.tablas("{:38}",menu, ['MENU DE CLIENTES'])
-        choice = input("")      #
-        match choice:
-            case '1':
-                self.limpiarPantalla()
-                self.crearCliente()
-            case '2':
-                self.limpiarPantalla()
-                self.editarClientes()
-            case '3':
-                self.limpiarPantalla()
-                self.eliminarClientes()
-            case '4':
-                self.limpiarPantalla()
-                self.listarClientes()
-            case '5':
-                self.limpiarPantalla()
-                self.buscadorClientes()
-            case '6':
-                self.limpiarPantalla()
-                self.mainMenu()
-            case default:
-                self.limpiarPantalla()
-                self.gestionarClientes()
+        opcion = self.opcion()
+        opciones = {'1': self.crearCliente, '2': self.editarClientes, '3': self.eliminarClientes, '4': self.listarClientes, '5': self.buscadorClientes, '6': self.mainMenu}
+        if opcion in ['1', '2', '3', '4', '5', '6']:
+            self.limpiarPantalla()
+            opciones.get(opcion, self.mainMenu)()
+        else:
+            self.limpiarPantalla()
+            self.gestionarClientes()
 #################################
 #################################                
     def crearCliente(self):    ##
@@ -348,12 +320,12 @@ class InterfazConcesionario:
         self.tablas_diccionario(cabecera, clientes,"Documento", self.gestionarClientes, "el SubMenú de Clientes")
 #################################
 #################################
-    def buscadorClientes (self):       ##
+    def buscadorClientes (self):
         parametros = ["documento", "apellido", "nombre"]
         menu = ["1. Documento", "2. Apellido", "3. Nombre"]
         contador =len(parametros)
         self.tablas("{:28}", menu, ["Buscador de clientes"])
-        opcion = input("  Opción:")
+        opcion = self.opcion()
         if opcion.isdigit():
             caso = int(opcion)-1
             if caso < len(parametros):
@@ -378,23 +350,14 @@ class InterfazConcesionario:
     def gestionarTransacciones(self):
         menu = ["1. Crear Transacción", "2. Listar Transacciones","3. Buscar Transacción", "4. Volver al Menú Principal"]
         self.tablas("{:<28}",menu, ['MENU DE TRANSACCIONES'])
-        choice = input("")
-        match choice:
-            case '1':
-                self.limpiarPantalla()
-                self.crearTransaccion()
-            case '2':
-                self.limpiarPantalla()
-                self.listarTodasLasTransacciones()
-            case '3':
-                self.limpiarPantalla()
-                self.buscadorTransacciones()    
-            case '4':
-                self.limpiarPantalla()
-                self.mainMenu()
-            case default:
-                self.limpiarPantalla()
-                self.gestionarTransacciones()
+        opcion = self.opcion()
+        opciones = {'1': self.crearTransaccion, '2': self.listarTodasLasTransacciones, '3': self.buscadorTransacciones, '4': self.mainMenu}
+        if opcion in ["1","2","3","4"]:
+            self.limpiarPantalla()
+            opciones.get(opcion, self.mainMenu)()
+        else:
+            self.limpiarPantalla()
+            self.gestionarTransacciones()
 #################################
 #################################
     def crearTransaccion(self):##
@@ -430,10 +393,10 @@ class InterfazConcesionario:
     def buscadorTransacciones(self):
         menu = ["1. Buscar por compras", "2. Buscar por ventas"]
         self.tablas("{:<48}", menu, ["Buscador de transacciones (Tipo de transacción: compra o venta)"])
-        opcion_menu = input("  Elija una opción: ")
+        opcion_menu = self.opcion()
         sub_menu = ["1. Buscar por ID de cliente", "2. Buscar por ID de vehículo", "3. Buscar por Rango de fechas"]
         self.tablas("{:<48}", sub_menu, ["Buscador de transacciones (ID de cliente, vehículo o rango de fechas)"])
-        opcion_sub_menu = input("  Elija una opción: ")
+        opcion_sub_menu = self.opcion()
         if opcion_menu in ["1", "2"]:
             if opcion_menu == "1":
                 tipo_transaccion = self.transaccionesDb.buscarRegistrosPorParametro("Compra", "tipo_transaccion")
