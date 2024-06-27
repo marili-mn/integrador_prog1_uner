@@ -38,6 +38,10 @@ class InterfazConcesionario:
                 table.add_row([ancho.format(elemento)])
             print(table)
 
+    def pausa(self):
+        input("  Presione Cualquier tecla para continuar...")
+        self.limpiarPantalla()
+
     def tablas_diccionario (self, lista_cabecera:list, lista_diccionarios:list, ordenamiento, subMenu, texto):
         #ancho se define como: "{:<38}" donde 38 es el ancho de la columna
         if (lista_diccionarios):
@@ -51,8 +55,7 @@ class InterfazConcesionario:
             table.align = "l"
             table.sortby = ordenamiento
             print(table)
-        input("  Presione Cualquier tecla para continuar...")
-        self.limpiarPantalla()
+        self.pausa()
         self.volverAtrasYSalir(subMenu, texto)        
 
     def volverAtrasYSalir(self, subMenu, texto):
@@ -82,8 +85,7 @@ class InterfazConcesionario:
             fecha = fecha_ok.strftime("%Y-%m-%d")
         except ValueError:
             print("Ingrese la fecha en el formato correcto (YYYY-MM-DD)")
-            input("  Presione Cualquier tecla para continuar...")
-            self.limpiarPantalla()
+            self.pausa()
             funcion_volver_a_menu()
 #################################
 #################################
@@ -245,8 +247,7 @@ class InterfazConcesionario:
                 self.mainMenu()
         else:
             print("  Opción inválida, por favor inténtelo nuevamente.")
-            input("  Presione Cualquier tecla para continuar...")
-            self.limpiarPantalla()
+            self.pausa()
             self.buscadorVehiculos()
         self.limpiarPantalla()
         #if resultados:
@@ -367,8 +368,7 @@ class InterfazConcesionario:
                 self.mainMenu()
         else:
             print("  Opción inválida, por favor inténtelo nuevamente.")
-            input("  Presione Cualquier tecla para continuar...")
-            self.limpiarPantalla()
+            self.pausa()
             self.buscadorClientes()
         self.limpiarPantalla()
         cabecera = ["ID", "Nombre", "Apellido","Documento", "Dirección", "Celular", "Email"]
@@ -460,7 +460,15 @@ class InterfazConcesionario:
                         if fecha_desde <= registro.get("fecha") <= fecha_hasta:
                            coleccion.append(registro)
                    resultados = coleccion
-                   self.tablas_diccionario (cabecera, resultados, "Fecha", self.gestionarTransacciones, "el SubMenú de Transacciones")     
+                   self.tablas_diccionario (cabecera, resultados, "Fecha", self.gestionarTransacciones, "el SubMenú de Transacciones")
+            else:
+                print("  Opción inválida, por favor inténtelo nuevamente.")
+                self.pausa()
+                self.buscadorTransacciones() 
+        else:
+            print("  Opción inválida, por favor inténtelo nuevamente.")
+            self.pausa()
+            self.buscadorTransacciones()     
 #################################
 #################################
 if __name__ == "__main__":     ##
