@@ -1,14 +1,18 @@
 import sys
 import os
-from prettytable import PrettyTable
-from datetime import datetime
-#   librerías de pyhton
+import requests
+import dolarapi
 
 from vehiculos import Vehiculos
 from clientes import Clientes
 from transaccion import Transaccion
 from database import Database
-#   bases de datos json    
+from prettytable import PrettyTable
+
+
+#global url , response
+#url = 'https://api.bluelytics.com.ar/v2/latest'
+#response = requests.get(url)
 
 global resultados
 resultados = []
