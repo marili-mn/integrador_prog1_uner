@@ -222,7 +222,7 @@ class InterfazConcesionario:
                 print("  Ingrese los datos del vehículo nuevamente: ")
                 self.editarVehiculo()
 
-            item_id = len(self.vehiculosDbDb.obtenerTodosLosRegistros()) + 1
+            item_id = len(self.vehiculosDb.obtenerTodosLosRegistros()) + 1
             actualizarVehiculo = Vehiculos(item_id, patente, marca, modelo, tipo_vehiculo, int(anio), int(kilometraje), float(precio_compra), float(precio_venta), estado)
             self.vehiculosDb.actualizarRegistro(item_id, actualizarVehiculo.a_dict())
             print("  Vehículo actualizado exitosamente.")
