@@ -3,54 +3,9 @@
         "item_id": 1,
         "id_vehiculo": 1,
         "id_cliente": 1,
-        "tipo_transaccion": "Venta",
-        "fecha": "2024-01-15",
-        "monto": 15000,
-        "observaciones": "Venta realizada con \u00e9xito."
-    },
-    {
-        "item_id": 2,
-        "id_vehiculo": 2,
-        "id_cliente": 2,
         "tipo_transaccion": "Compra",
-        "fecha": "2024-01-20",
-        "monto": 14000,
-        "observaciones": "Compra registrada."
-    },
-    {
-        "item_id": 3,
-        "id_vehiculo": 3,
-        "id_cliente": 3,
-        "tipo_transaccion": "3",
-        "fecha": "2022-12-02",
-        "monto": 2111.0,
+        "fecha": "2022-02-12",
+        "monto": 1000.0,
         "observaciones": "Todo ok"
-    },
-    {
-        "item_id": 4,
-        "id_vehiculo": 7,
-        "id_cliente": 8,
-        "tipo_transaccion": "Compra",
-        "fecha": "2022-02-03",
-        "monto": 10000.0,
-        "observaciones": "Todo ok"
-    },
-    {
-        "item_id": 5,
-        "id_vehiculo": 7,
-        "id_cliente": 88,
-        "tipo_transaccion": "Venta",
-        "fecha": "2022-03-04",
-        "monto": 10000.0,
-        "observaciones": "Todo ok"
-    },
-    {
-        "item_id": 6,
-        "id_vehiculo": 99,
-        "id_cliente": 88,
-        "tipo_transaccion": "Compra",
-        "fecha": "2019-01-03",
-        "monto": 11111.0,
-        "observaciones": "Bien"
     }
 ]

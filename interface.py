@@ -3,6 +3,7 @@ import os
 import requests
 import dolarapi
 
+from datetime import datetime
 from vehiculos import Vehiculos
 from clientes import Clientes
 from transaccion import Transaccion
@@ -97,7 +98,7 @@ class InterfazConcesionario:
         try:
             fecha_ok = datetime.fromisoformat(fecha)
             fecha = fecha_ok.strftime("%Y-%m-%d")
-            #   valida la fecha
+            #valida la fecha
         except ValueError:
             print("Ingrese la fecha en el formato correcto (YYYY-MM-DD)")
             self.pausa()
@@ -188,7 +189,7 @@ class InterfazConcesionario:
             print("  Precio de compra, precio de venta y año deben ingresarse en formato numérico")
             print("  Ingrese los datos del vehículo nuevamente: ")
             self.crearVehiculo()
-
+        self.clientesDb.agregarRegistro(nuevoCliente.a_dict())
         item_id = len(self.vehiculosDb.obtenerTodosLosRegistros()) + 1
         nuevoVehiculo = Vehiculos(item_id, patente, marca, modelo, tipo_vehiculo, anio, kilometraje, precio_compra, precio_venta, estado)
         self.vehiculosDb.agregarRegistro(nuevoVehiculo.a_dict())
@@ -221,6 +222,7 @@ class InterfazConcesionario:
                 print("  Ingrese los datos del vehículo nuevamente: ")
                 self.editarVehiculo()
 
+            item_id = len(self.vehiculosDbDb.obtenerTodosLosRegistros()) + 1
             actualizarVehiculo = Vehiculos(item_id, patente, marca, modelo, tipo_vehiculo, int(anio), int(kilometraje), float(precio_compra), float(precio_venta), estado)
             self.vehiculosDb.actualizarRegistro(item_id, actualizarVehiculo.a_dict())
             print("  Vehículo actualizado exitosamente.")

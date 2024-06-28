@@ -1,38 +1,3 @@
 [
-    {
-        "item_id": 1,
-        "nombre": "Juan",
-        "apellido": "Perez",
-        "documento": "12345678",
-        "direccion": "Calle Falsa 123",
-        "celular": "123-4567",
-        "email": "juan.perez@example.com"
-    },
-    {
-        "item_id": 2,
-        "nombre": "Martina",
-        "apellido": "Gomez",
-        "documento": "87654321",
-        "direccion": "Avenida Siempreviva 742",
-        "celular": "987-6543",
-        "email": "maria.gomez@example.com"
-    },
-    {
-        "item_id": 3,
-        "nombre": "Juansito",
-        "documento": "22456765",
-        "apellido": "Anacleto",
-        "direccion": "asdasd 123",
-        "celular": "123456789",
-        "email": "JuansitoA@gmail.com"
-    },
-    {
-        "item_id": 4,
-        "nombre": "Marcos",
-        "documento": "29.565.11",
-        "apellido": "Lastra",
-        "direccion": "Casimiro",
-        "celular": "155102723",
-        "email": "marcos_lastra@gmail.com"
-    }
+
 ]

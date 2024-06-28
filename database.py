@@ -60,7 +60,6 @@ class Database:
                 coleccion.append(registro)
         return coleccion
 
-####
     def buscarEnMemoriaPorParametro(self,registroId, dic_operacion, parametro):
         coleccion =[]
         for registro in dic_operacion:
