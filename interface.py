@@ -10,9 +10,9 @@ from database import Database
 from prettytable import PrettyTable
 
 
-#global url , response
-#url = 'https://api.bluelytics.com.ar/v2/latest'
-#response = requests.get(url)
+global url , response
+url = 'https://api.bluelytics.com.ar/v2/latest'
+response = requests.get(url)
 
 global resultados
 resultados = []
@@ -112,14 +112,44 @@ class InterfazConcesionario:
                 coleccion.append(registro)
         return coleccion
 #################################
-    def mainMenu(self):        ##
+#################################
+    def menuDolar(self):
+        self.limpiarPantalla()
+        menu = ['1. Ver Cotización del Dolar Blue', '2. Ver Cotización de Dolar Oficial', '3. Volver al Menú']
+        self.tablas("{:<48}", menu ,['  MENU DE COTIZACIÓN DEL DOLAR'])
+        opcion = self.opcion()
+        self.limpiarPantalla()
+        if opcion in ['1', '2', '3']:
+            if opcion == '1':
+                dolar = dolarapi.data['blue']
+            elif opcion == '2'  :
+                dolar = dolarapi.data['oficial']
+            elif opcion == '3':
+                self.volverAtrasYSalir(self.menuDolar, "Menú de Cotización del Dolar")
+            else:
+                self.menuDolar()
+        cabecera =['Valor Promedio', 'Valor Venta', 'Valor Compra']
+        dolar_string = []
+        for elemento in dolar:
+            dolar_string.append(str(dolar.get(elemento)))
+        table = PrettyTable()
+        table.field_names = cabecera
+        table.add_row(dolar_string)
+        table.align = "l"
+        print(table)
+        self.pausa()
+        self.volverAtrasYSalir(self.menuDolar, "Menú de Cotización del Dolar")
+              
+#################################    
+#################################
+    def mainMenu(self):        
         opcion = ""
         self.limpiarPantalla()
-        menu = ['1. Vehículos', '2. Clientes', '3. Transacciones', '4. Salir']
+        menu = ['1. Vehículos', '2. Clientes', '3. Transacciones', '4. Ver Cotización del Dolar', '5. Salir']
         self.tablas("{:<28}", menu ,['  MENU PRINCIPAL'])
         opcion = self.opcion()
-        opciones = { '1': self.gestionarVehiculos, '2': self.gestionarClientes, '3': self.gestionarTransacciones, '4': sys.exit}
-        if opcion in ["1","2","3","4"]:
+        opciones = { '1': self.gestionarVehiculos, '2': self.gestionarClientes, '3': self.gestionarTransacciones,'4':self.menuDolar, '5': sys.exit}
+        if opcion in ["1","2","3","4","5"]:
             self.limpiarPantalla()
             opciones.get(opcion, self.mainMenu)()
         else:
