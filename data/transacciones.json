@@ -7,5 +7,50 @@
         "fecha": "2022-02-12",
         "monto": 1000.0,
         "observaciones": "Todo ok"
+    },
+    {
+        "item_id": 2,
+        "id_vehiculo": 2,
+        "id_cliente": 2,
+        "tipo_transaccion": "Venta",
+        "fecha": "2024-01-05",
+        "monto": 25000.0,
+        "observaciones": "Todo ok"
+    },
+    {
+        "item_id": 3,
+        "id_vehiculo": 4,
+        "id_cliente": 3,
+        "tipo_transaccion": "Compra",
+        "fecha": "2018-09-07",
+        "monto": 510000.0,
+        "observaciones": "Pedir documentaci\u00f3n faltante"
+    },
+    {
+        "item_id": 4,
+        "id_vehiculo": 9,
+        "id_cliente": 5,
+        "tipo_transaccion": "Venta",
+        "fecha": "2024-04-24",
+        "monto": 103640.0,
+        "observaciones": "Sin observaciones"
+    },
+    {
+        "item_id": 5,
+        "id_vehiculo": 8,
+        "id_cliente": 7,
+        "tipo_transaccion": "Compra",
+        "fecha": "2023-05-10",
+        "monto": 68400.0,
+        "observaciones": "Sin certificaci\u00f3n/doc"
+    },
+    {
+        "item_id": 6,
+        "id_vehiculo": 5,
+        "id_cliente": 4,
+        "tipo_transaccion": "Venta",
+        "fecha": "2015-10-06",
+        "monto": 10000000.0,
+        "observaciones": "Sin observaciones"
     }
 ]

@@ -1,3 +1,110 @@
 [
-    
+    {
+        "item_id": 1,
+        "patente": "POI987",
+        "marca": "Jeep",
+        "modelo": "Renegade 1.8",
+        "tipo_vehiculo": "Suv",
+        "anio": 2022,
+        "kilometraje": "2500",
+        "precio_compra": 68000.0,
+        "precio_venta": 69000.0,
+        "estado": "Reservado"
+    },
+    {
+        "item_id": 2,
+        "patente": "UYT654",
+        "marca": "Mercedes benz",
+        "modelo": "Avantgarde",
+        "tipo_vehiculo": "Sed\u00e1n",
+        "anio": 2011,
+        "kilometraje": "12300",
+        "precio_compra": 18000.0,
+        "precio_venta": 25000.0,
+        "estado": "Vendido"
+    },
+    {
+        "item_id": 3,
+        "patente": "QWE123",
+        "marca": "Audi",
+        "modelo": "R8",
+        "tipo_vehiculo": "Coup\u00e9",
+        "anio": 2010,
+        "kilometraje": "10000",
+        "precio_compra": 230000.0,
+        "precio_venta": 265000.0,
+        "estado": "Disponible"
+    },
+    {
+        "item_id": 4,
+        "patente": "ASD963",
+        "marca": "Lamborghini",
+        "modelo": "Aventador",
+        "tipo_vehiculo": "Coup\u00e9",
+        "anio": 2011,
+        "kilometraje": "23000",
+        "precio_compra": 507353.0,
+        "precio_venta": 510000.0,
+        "estado": "Reservado"
+    },
+    {
+        "item_id": 5,
+        "patente": "XCV258",
+        "marca": "Tesla",
+        "modelo": "Cybertruck",
+        "tipo_vehiculo": "Pick up",
+        "anio": 2019,
+        "kilometraje": "3000",
+        "precio_compra": 10000000.0,
+        "precio_venta": 1200000.0,
+        "estado": "Vendido"
+    },
+    {
+        "item_id": 6,
+        "patente": "HGF741",
+        "marca": "Bmw",
+        "modelo": "Alpina b7",
+        "tipo_vehiculo": "Sed\u00e1n",
+        "anio": 2020,
+        "kilometraje": "1000",
+        "precio_compra": 98000.0,
+        "precio_venta": 99000.0,
+        "estado": "Disponible"
+    },
+    {
+        "item_id": 7,
+        "patente": "BGR624",
+        "marca": "Aston martin",
+        "modelo": "V12 vantage s",
+        "tipo_vehiculo": "Sed\u00e1n",
+        "anio": 2021,
+        "kilometraje": "4100",
+        "precio_compra": 134900.0,
+        "precio_venta": 139000.0,
+        "estado": "Reservado"
+    },
+    {
+        "item_id": 8,
+        "patente": "TYG014",
+        "marca": "Alfa romeo",
+        "modelo": "4c",
+        "tipo_vehiculo": "Sed\u00e1n",
+        "anio": 2010,
+        "kilometraje": "8000",
+        "precio_compra": 53900.0,
+        "precio_venta": 68400.0,
+        "estado": "Vendido"
+    },
+    {
+        "item_id": 9,
+        "patente": "KJL587",
+        "marca": "Jaguar",
+        "modelo": "I-pace",
+        "tipo_vehiculo": "Sed\u00e1n",
+        "anio": 2018,
+        "kilometraje": "3500",
+        "precio_compra": 83500.0,
+        "precio_venta": 103640.0,
+        "estado": "Vendido"
+    }
 ]

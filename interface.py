@@ -189,7 +189,7 @@ class InterfazConcesionario:
             print("  Precio de compra, precio de venta y año deben ingresarse en formato numérico")
             print("  Ingrese los datos del vehículo nuevamente: ")
             self.crearVehiculo()
-        self.clientesDb.agregarRegistro(nuevoCliente.a_dict())
+        #self.vehiculosDb.agregarRegistro(nuevoVehiculo.a_dict())
         item_id = len(self.vehiculosDb.obtenerTodosLosRegistros()) + 1
         nuevoVehiculo = Vehiculos(item_id, patente, marca, modelo, tipo_vehiculo, anio, kilometraje, precio_compra, precio_venta, estado)
         self.vehiculosDb.agregarRegistro(nuevoVehiculo.a_dict())

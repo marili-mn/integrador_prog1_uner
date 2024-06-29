@@ -1,3 +1,65 @@
 [
-
+    {
+        "item_id": 1,
+        "nombre": "Lionel",
+        "documento": "32014788",
+        "apellido": "Messi",
+        "direccion": "Calle 10 buenosaires",
+        "celular": "+543258446987",
+        "email": "lionel.messi@email.com"
+    },
+    {
+        "item_id": 2,
+        "nombre": "\u00c1ngel",
+        "documento": "23456789",
+        "apellido": "Di mar\u00eda",
+        "direccion": "Av. libertador 123 rosario",
+        "celular": "+543698741520",
+        "email": "angel.dimaria@gmail.com"
+    },
+    {
+        "item_id": 3,
+        "nombre": "Nicol\u00e1s",
+        "documento": "34567890",
+        "apellido": "Otamendi",
+        "direccion": "Calle 20 mendoza",
+        "celular": "+547895412036",
+        "email": "nicolas.otamendi@hotmail.com"
+    },
+    {
+        "item_id": 4,
+        "nombre": "Emiliano",
+        "documento": "35896321",
+        "apellido": "Mart\u00ednez",
+        "direccion": "Av. san mart\u00edn 456, buenos aires",
+        "celular": "+54796520147",
+        "email": "emiliano.martinez@yahoo.com"
+    },
+    {
+        "item_id": 5,
+        "nombre": "Cristian",
+        "documento": "35962014",
+        "apellido": "Romero",
+        "direccion": "Calle 30, c\u00f3rdoba",
+        "celular": "+547895632011",
+        "email": "cristian.romero@gmail.com"
+    },
+    {
+        "item_id": 6,
+        "nombre": "Rodrigo",
+        "documento": "42105998",
+        "apellido": "De paul",
+        "direccion": "Av. belgrano 894, tucum\u00e1n",
+        "celular": "+548965558968",
+        "email": "rodrigo.depaul@hotmail.com"
+    },
+    {
+        "item_id": 7,
+        "nombre": "Lautaro",
+        "documento": "47589663",
+        "apellido": "Mart\u00ednez",
+        "direccion": "Calle 40, la plata",
+        "celular": "+547896555896",
+        "email": "lautaro.martinez@yahoo.com"
+    }
 ]
